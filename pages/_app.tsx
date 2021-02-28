@@ -5,29 +5,26 @@ import { AnimatePresence } from "framer-motion";
 import Navbar from '../components/Navbar';
 import { useState, useRef, useEffect } from 'react';
 import { clamp } from "../helpers";
+import SideNav from "../components/SideNav";
 
 type Direction = "up" | "down";
 
 const NavigateThreshold = 500;
-const pages = ["/", "/esperienze", "/formazione", "/competenze", "/interessi", "/contatti"];
+const pages = ["/", "/esperienze", "/formazione", "/competenze", "/interessi", "/contatti", "/progetti"];
 const getNextRoute = (route: string, direction: Direction) => {
 	if (direction === "down") {
 		switch (route) {
 			case "/":
 				return "/esperienze";
-			case "/esperienze":
-				return "/contatti";
 			default:
-				return route;
+				return "/progetti"
 		}
 	} else {
 		switch (route) {
-			case "/esperienze":
-				return "/";
-			case "/contatti":
+			case "/progetti":
 				return "/esperienze";
 			default:
-				return route;
+				return "/";
 		}
 	}
 }
@@ -39,8 +36,7 @@ const App: React.FC<AppProps> = ({ Component, pageProps, router }) => {
 		page: router.route,
 	});
 	
-	const wheelListener = (e: React.WheelEvent) => {
-		console.log(scrollRef.current);
+	const onWheel = (e: React.WheelEvent) => {
 		clearTimeout(throttle);
 		const { deltaY } = e;
 		const direction: Direction = deltaY < 0 ? "up" : "down";
@@ -50,23 +46,22 @@ const App: React.FC<AppProps> = ({ Component, pageProps, router }) => {
 				const nextRoute = getNextRoute(router.route, direction);
 				if (router.route !== nextRoute) {
 					scrollRef.current.page = nextRoute;
-					scrollRef.current.pixels = 0;
+					scrollRef.current.pixels = direction === "up" ? 500 : 0;
 					router.push(scrollRef.current.page)
-						.then(() => console.log("done"));
 				}
 			}
 		}, 200);
 	}
-	console.log("render");
 	return (
 		<div 
 			className="app"
-			onWheel={wheelListener}
+			onWheel={onWheel}
 		>
-			<Navbar isOnTop={router.route !== "/"} linksVisible={router.route !== "/" && router.route !== "/esperienze"} />
+			<Navbar isOnTop={router.route !== "/"} linksVisible={router.route === "/progetti"} />
 			<AnimatePresence exitBeforeEnter>
 				<Component {...pageProps} key={router.route} />
 			</AnimatePresence>
+			<SideNav isVisible={router.route !== "/" && router.route !== "/progetti"} />
 		</div>
 	);
 };

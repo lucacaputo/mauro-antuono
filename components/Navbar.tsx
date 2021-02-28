@@ -1,5 +1,6 @@
 import { motion, Variants, AnimatePresence } from "framer-motion";
 import styles from "../styles/navbar.module.css";
+import Link from "next/link";
 
 type NavProps = {
     isOnTop: boolean,
@@ -19,23 +20,23 @@ const Navbar: React.FC<NavProps> = ({ isOnTop, linksVisible }) => {
     const links = [
         {
             text: "Esperienze",
-            to: "esperienze",
+            to: "/esperienze",
         },
         {
             text: "Formazione",
-            to: "formazione",
+            to: "/formazione",
         },
         {
             text: "Competenze",
-            to: "competenze",
+            to: "/competenze",
         },
         {
             text: "Interessi",
-            to: "interessi",
+            to: "/interessi",
         },
         {
             text: "Contatti",
-            to: "contatti",
+            to: "/contatti",
         },
     ];
     const navVariants = getNavVariants(isOnTop);
@@ -81,7 +82,9 @@ const Navbar: React.FC<NavProps> = ({ isOnTop, linksVisible }) => {
                             {
                                 links.map(el => (
                                     <motion.li key={el.to}>
-                                        <a href="#">{el.text}</a>
+                                        <Link href={el.to}>
+                                            <a>{el.text}</a>
+                                        </Link>
                                     </motion.li>
                                 ))
                             }
