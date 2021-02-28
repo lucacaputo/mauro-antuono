@@ -1,6 +1,8 @@
 import { motion, AnimatePresence, Variants } from "framer-motion";
 import styles from "../styles/sidenav.module.css";
 import Link from "next/link";
+import Plus from "./Plus";
+import { useRouter } from "next/router"
 
 type SideNavProps = {
     isVisible: boolean;
@@ -61,6 +63,7 @@ const SideNav: React.FC<SideNavProps> = ({ isVisible }) => {
             }
         }
     }
+    const { route } = useRouter();
     return (
         <AnimatePresence>
             {
@@ -77,7 +80,10 @@ const SideNav: React.FC<SideNavProps> = ({ isVisible }) => {
                                 links.map(l => (
                                     <motion.li key={`sidenav-${l.to}`}>
                                         <Link href={l.to}>
-                                            <a>{l.text}</a>
+                                            <a className={styles.link}>
+                                                <span>{l.text}</span>
+                                                <Plus isToggled={route === l.to} />
+                                            </a>
                                         </Link>
                                     </motion.li>
                                 ))

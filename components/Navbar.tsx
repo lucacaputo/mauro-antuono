@@ -81,7 +81,7 @@ const Navbar: React.FC<NavProps> = ({ isOnTop, linksVisible }) => {
                         >
                             {
                                 links.map(el => (
-                                    <motion.li key={el.to}>
+                                    <motion.li key={`nav-${el.to}`}>
                                         <Link href={el.to}>
                                             <a>{el.text}</a>
                                         </Link>

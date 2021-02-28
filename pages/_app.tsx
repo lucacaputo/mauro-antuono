@@ -1,11 +1,11 @@
 import "../styles/globals.css";
 import { AppProps } from "next/app";
-import { Router } from "next/router";
 import { AnimatePresence } from "framer-motion";
 import Navbar from '../components/Navbar';
-import { useState, useRef, useEffect } from 'react';
+import { useRef } from 'react';
 import { clamp } from "../helpers";
 import SideNav from "../components/SideNav";
+import InfoContainer from '../components/InfoContainer';
 
 type Direction = "up" | "down";
 
@@ -58,10 +58,13 @@ const App: React.FC<AppProps> = ({ Component, pageProps, router }) => {
 			onWheel={onWheel}
 		>
 			<Navbar isOnTop={router.route !== "/"} linksVisible={router.route === "/progetti"} />
-			<AnimatePresence exitBeforeEnter>
-				<Component {...pageProps} key={router.route} />
-			</AnimatePresence>
-			<SideNav isVisible={router.route !== "/" && router.route !== "/progetti"} />
+			<div id="mainContainer">
+				<AnimatePresence exitBeforeEnter>
+					<Component {...pageProps} key={router.route} />
+				</AnimatePresence>
+				<SideNav isVisible={router.route !== "/" && router.route !== "/progetti"} />
+				<InfoContainer isVisible={router.route !== "/" && router.route !== "/progetti"} />
+			</div>
 		</div>
 	);
 };

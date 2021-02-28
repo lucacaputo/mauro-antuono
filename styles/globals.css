@@ -36,3 +36,12 @@ a {
   z-index: 1;
   overflow: hidden;
 }
+#mainContainer {
+  position: relative;
+  margin: auto;
+  max-width: 1920px;
+  z-index: 1;
+  padding: 150px 1.5rem 0 1.5rem;
+  display: flex;
+  flex-direction: row;
+}
