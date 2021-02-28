@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import { NextPage } from "next"
 
-const Index: NextPage = () => {
+const Formazione: NextPage = () => {
     return (
         <div className="home">
             
@@ -9,4 +9,4 @@ const Index: NextPage = () => {
     );
 }
 
-export default Index;
+export default Formazione;

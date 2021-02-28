@@ -1,9 +1,24 @@
+@font-face {
+  font-family: futura;
+  src: url("../public/fonts/Futura\ Std\ Book.ttf") format("truetype");
+}
+@font-face {
+  font-family: futura-bold;
+  src: url("../public/fonts/Futura\ Bold.ttf") format("truetype");
+}
+@font-face {
+  font-family: futura-thin;
+  src: url("../public/fonts/Futura\ Thin.ttf") format("truetype");
+}
+
+
 html,
 body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+  font-family: futura, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  background-color: #f6f6f6;
 }
 
 a {
@@ -13,4 +28,11 @@ a {
 
 * {
   box-sizing: border-box;
+}
+.app {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1;
+  overflow: hidden;
 }
