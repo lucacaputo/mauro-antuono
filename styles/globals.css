@@ -7,6 +7,10 @@
   src: url("../public/fonts/Futura\ Bold.ttf") format("truetype");
 }
 @font-face {
+  font-family: futura-black;
+  src: url("../public/fonts/Futura\ Std\ Heavy.ttf") format("truetype");
+}
+@font-face {
   font-family: futura-thin;
   src: url("../public/fonts/Futura\ Thin.ttf") format("truetype");
 }

@@ -47,7 +47,7 @@ const App: React.FC<AppProps> = ({ Component, pageProps, router }) => {
 				if (router.route !== nextRoute) {
 					scrollRef.current.page = nextRoute;
 					scrollRef.current.pixels = direction === "up" ? 500 : 0;
-					router.push(scrollRef.current.page)
+					router.push(scrollRef.current.page);
 				}
 			}
 		}, 200);

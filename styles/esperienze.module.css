@@ -1,0 +1,14 @@
+.esperienze {
+    position: relative;
+}
+.esperienze a {
+    text-decoration: underline;
+}
+.esperienze a:hover {
+    color: #007bff;
+}
+.black {
+    font-family: futura-black;
+    font-size: 20px;
+    line-height: 30px;
+}

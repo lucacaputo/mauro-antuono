@@ -31,9 +31,9 @@ const Plus: React.FC<PlusProps> = ({ isToggled }) => {
             viewBox="0 0 50 50"
         >
             <motion.rect 
-                x="23" 
+                x="24" 
                 y="0"
-                width="4"
+                width="2"
                 height="50"
                 fill="#000"
                 stroke="none"
@@ -43,9 +43,9 @@ const Plus: React.FC<PlusProps> = ({ isToggled }) => {
             />
             <motion.rect
                 x="0"
-                y="23"
+                y="24"
                 width="50"
-                height="4"
+                height="2"
                 fill="#000"
                 stroke="none"
                 initial="untoggled"
