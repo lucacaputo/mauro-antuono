@@ -62,8 +62,8 @@ const App: React.FC<AppProps> = ({ Component, pageProps, router }) => {
 				<AnimatePresence exitBeforeEnter>
 					<Component {...pageProps} key={router.route} />
 				</AnimatePresence>
-				<SideNav isVisible={router.route !== "/" && router.route !== "/progetti"} />
-				<InfoContainer isVisible={router.route !== "/" && router.route !== "/progetti"} />
+				<SideNav isVisible={router.route !== "/"} />
+				<InfoContainer isVisible={router.route !== "/"} />
 			</div>
 		</div>
 	);

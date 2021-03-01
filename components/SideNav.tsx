@@ -43,24 +43,29 @@ const SideNav: React.FC<SideNavProps> = ({ isVisible }) => {
             opacity: 1,
             scale: 1,
             transition: {
-                duration: .5
+                duration: .5,
             }
         },
         exit: {
             opacity: 0,
             scale: 1.2,
             transition: {
-                duration: .3
+                duration: .3,
             }
         }
     }
-    const liVar: Variants = {
+    const ulVar: Variants = {
         initial: {
-            x: -50,
+            scale: .9,
             opacity: 0,
-            transition: {
-                
-            }
+        },
+        loaded: {
+            opacity: 1,
+            scale: 1,
+        },
+        exit: {
+            opacity: 0,
+            scale: .9,
         }
     }
     const { route } = useRouter();
@@ -75,20 +80,44 @@ const SideNav: React.FC<SideNavProps> = ({ isVisible }) => {
                         exit="exit"
                         variants={sideVar}
                     >
-                        <ul>
+                        <AnimatePresence exitBeforeEnter>
                             {
-                                links.map(l => (
-                                    <motion.li key={`sidenav-${l.to}`}>
-                                        <Link href={l.to}>
-                                            <a className={styles.link}>
-                                                <span>{l.text}</span>
-                                                <Plus isToggled={route === l.to} />
-                                            </a>
-                                        </Link>
-                                    </motion.li>
-                                ))
+                                route !== "/progetti" && (
+                                    <motion.ul
+                                        variants={ulVar}
+                                        initial="initial"
+                                        animate="loaded"
+                                        exit="exit"
+                                        key="std"
+                                    >
+                                        {
+                                            links.map(l => (
+                                                <motion.li key={`sidenav-${l.to}`}>
+                                                    <Link href={l.to}>
+                                                        <a className={styles.link}>
+                                                            <span>{l.text}</span>
+                                                            <Plus isToggled={route === l.to} />
+                                                        </a>
+                                                    </Link>
+                                                </motion.li>
+                                            ))
+                                        }
+                                    </motion.ul>
+                                )
                             }
-                        </ul>
+                            {
+                                route === "/progetti" && (
+                                    <motion.ul 
+                                        key="prj"
+                                        id="appendProjectLinks"
+                                        variants={ulVar}
+                                        initial="initial"
+                                        animate="loaded"
+                                        exit="exit"
+                                    />
+                                )
+                            }
+                        </AnimatePresence>
                     </motion.nav>
                 )
             }

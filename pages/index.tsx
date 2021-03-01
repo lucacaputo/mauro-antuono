@@ -3,9 +3,9 @@ import { NextPage } from "next"
 
 const Index: NextPage = () => {
     return (
-        <div className="home">
-            
-        </div>
+        <Head>
+            <title>Mario Longobardi</title>
+        </Head>
     );
 }
 

@@ -11,15 +11,14 @@
     display: flex;
     padding: 0;
     flex-direction: column;
-    flex: .3;
     list-style: none;
     justify-content: space-between;
 }
 .link {
-    display: block;
     width: 100%;
     position: relative;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 20px 0;
 }

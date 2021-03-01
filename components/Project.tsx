@@ -1,13 +1,14 @@
 import { motion, Variants } from 'framer-motion';
+import { Project as ProjectType } from '../pages/progetti';
 import styles from "../styles/project.module.css";
 
 type ProjectProps = {
-    title: string,
-    image: string,
+    project: ProjectType,
     lid: string,
 }
 
-const Project: React.FC<ProjectProps> = ({ title, image, lid }) => {
+const Project: React.FC<ProjectProps> = ({ project, lid }) => {
+    const { image, title } = project;
     const projectVar: Variants = {
         initial: {
             scale: 1
@@ -36,6 +37,7 @@ const Project: React.FC<ProjectProps> = ({ title, image, lid }) => {
             whileHover="hover"
             variants={projectVar}
             className={styles.project}
+            layoutId={lid}
         >
             <img src={image} alt={title}/>
             <motion.span 
