@@ -1,0 +1,38 @@
+.project {
+    width: 45px;
+    height: 45px;
+    margin-right: 10px;
+    position: relative;
+    cursor: pointer;
+    overflow: visible;
+}
+.tooltip {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: max-content;
+    padding: 5px 10px;
+    border-radius: 4px;
+    background-color: #141414;
+    color: #f6f6f6;
+    text-align: center;
+    box-shadow: 0 0 10px #141414;
+    transform-origin: center;
+    margin-block-end: 0;
+    font-size: 10px;
+    font-family: futura;
+}
+.tooltip::before {
+    content: '';
+    position: absolute;
+    top: calc(100% - 1px);
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 10px 5px 0 5px;
+    border-color: #141414 transparent transparent transparent;
+    border-style: solid;
+}
+.project img {
+    width: 100%;
+    display: block;
+}
