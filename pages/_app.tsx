@@ -10,7 +10,6 @@ import InfoContainer from '../components/InfoContainer';
 type Direction = "up" | "down";
 
 const NavigateThreshold = 500;
-const pages = ["/", "/esperienze", "/formazione", "/competenze", "/interessi", "/contatti", "/progetti"];
 const getNextRoute = (route: string, direction: Direction) => {
 	if (direction === "down") {
 		switch (route) {
@@ -35,7 +34,7 @@ const App: React.FC<AppProps> = ({ Component, pageProps, router }) => {
 		pixels: 0,
 		page: router.route,
 	});
-	
+
 	const onWheel = (e: React.WheelEvent) => {
 		clearTimeout(throttle);
 		const { deltaY } = e;

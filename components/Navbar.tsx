@@ -51,16 +51,20 @@ const Navbar: React.FC<NavProps> = ({ isOnTop, linksVisible }) => {
                 duration: .7,
             }}
         >
-            <motion.h1
-                variants={h1Variants}
-                transition={{
-                    type: "spring",
-                    duration: .3,
-                    delay: isOnTop ? 0 : .15,
-                }}
-            >
-                Mario Antonio Longobardi
-            </motion.h1>
+            <Link href="/">
+                <a>
+                    <motion.h1
+                        variants={h1Variants}
+                        transition={{
+                            type: "spring",
+                            duration: .3,
+                            delay: isOnTop ? 0 : .15,
+                        }}
+                    >
+                        Mario Antonio Longobardi
+                    </motion.h1>
+                </a>
+            </Link>
             <AnimatePresence>
                 {
                     linksVisible && (

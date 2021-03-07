@@ -1,5 +1,6 @@
 import { motion, AnimatePresence, Variants } from "framer-motion";
 import styles from "../styles/infocont.module.css";
+import { useRouter } from "next/router"
 
 type InfoContainerProps = {
     isVisible: boolean,
@@ -26,6 +27,7 @@ const InfoContainer: React.FC<InfoContainerProps> = ({ isVisible }) => {
             }
         }
     }
+    const { route } = useRouter();
     return (
         <AnimatePresence>
             {
@@ -37,9 +39,10 @@ const InfoContainer: React.FC<InfoContainerProps> = ({ isVisible }) => {
                         exit="exit"
                         variants={contVar}
                         className={styles.infocont}
-                    >
-                        
-                    </motion.div>
+                        style={{
+                            display: route === "/progetti" ? "flex" : "block" 
+                        }}
+                    />
                 )
             }
         </AnimatePresence>

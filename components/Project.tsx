@@ -4,10 +4,9 @@ import styles from "../styles/project.module.css";
 
 type ProjectProps = {
     project: ProjectType,
-    lid: string,
 }
 
-const Project: React.FC<ProjectProps> = ({ project, lid }) => {
+const Project: React.FC<ProjectProps> = ({ project }) => {
     const { image, title } = project;
     const projectVar: Variants = {
         initial: {
@@ -37,7 +36,6 @@ const Project: React.FC<ProjectProps> = ({ project, lid }) => {
             whileHover="hover"
             variants={projectVar}
             className={styles.project}
-            layoutId={lid}
         >
             <img src={image} alt={title}/>
             <motion.span 
