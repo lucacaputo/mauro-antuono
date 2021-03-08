@@ -6,6 +6,7 @@ import { useRef } from 'react';
 import { clamp } from "../helpers";
 import SideNav from "../components/SideNav";
 import InfoContainer from '../components/InfoContainer';
+import ScrollArrow from '../components/ScrollArrow';
 
 type Direction = "up" | "down";
 
@@ -64,6 +65,9 @@ const App: React.FC<AppProps> = ({ Component, pageProps, router }) => {
 				<SideNav isVisible={router.route !== "/"} />
 				<InfoContainer isVisible={router.route !== "/"} />
 			</div>
+			<AnimatePresence>
+				<ScrollArrow />
+			</AnimatePresence>
 		</div>
 	);
 };
