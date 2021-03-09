@@ -31,7 +31,7 @@ const getNextRoute = (route: string, direction: Direction) => {
 
 const App: React.FC<AppProps> = ({ Component, pageProps, router }) => {
 	let throttle: ReturnType<typeof setTimeout> | null = null;
-	const scrollRef = useRef({
+	const scrollRef = useRef<{ pixels: number, page: string }>({
 		pixels: 0,
 		page: router.route,
 	});
@@ -66,7 +66,10 @@ const App: React.FC<AppProps> = ({ Component, pageProps, router }) => {
 				<InfoContainer isVisible={router.route !== "/"} />
 			</div>
 			<AnimatePresence>
-				<ScrollArrow />
+				{
+					router.route !== "/progetti" &&
+					<ScrollArrow onClick={() => router.push(getNextRoute(router.route, "down"))} />
+				}
 			</AnimatePresence>
 		</div>
 	);

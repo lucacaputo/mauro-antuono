@@ -1,7 +1,11 @@
 import { motion, Variants } from "framer-motion";
 import styles from "../styles/scrollarrow.module.css";
 
-const ScrollArrow: React.FC = () => {
+type ScrollArrowProps = {
+    onClick: () => void,
+}
+
+const ScrollArrow: React.FC<ScrollArrowProps> = ({ onClick }) => {
     const arrVars: Variants = {
         initial: {
             x: "-50%",
@@ -26,12 +30,13 @@ const ScrollArrow: React.FC = () => {
             initial="initial"
             animate="enter"
             exit="exit"
+            onClick={onClick}
         >
             <svg
                 width={50}
-                height={150}
+                height={65}
                 viewBox="0 0 50 150"
-                preserveAspectRatio="none"
+                
             >
                 <motion.line
                     x1="25"
