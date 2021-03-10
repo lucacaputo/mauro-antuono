@@ -13,19 +13,11 @@ type Direction = "up" | "down";
 const NavigateThreshold = 500;
 const getNextRoute = (route: string, direction: Direction) => {
 	if (direction === "down") {
-		switch (route) {
-			case "/":
-				return "/esperienze";
-			default:
-				return "/progetti"
-		}
+		if (route === "/") return "/esperienze";
+		else return "/progetti";
 	} else {
-		switch (route) {
-			case "/progetti":
-				return "/esperienze";
-			default:
-				return "/";
-		}
+		if (route === "/progetti") return "/esperienze";
+		else return "/";
 	}
 }
 
