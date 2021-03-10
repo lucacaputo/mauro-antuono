@@ -68,7 +68,11 @@ const App: React.FC<AppProps> = ({ Component, pageProps, router }) => {
 			<AnimatePresence>
 				{
 					router.route !== "/progetti" &&
-					<ScrollArrow onClick={() => router.push(getNextRoute(router.route, "down"))} />
+					<ScrollArrow onClick={() => {
+						scrollRef.current.pixels = 0;
+						scrollRef.current.page = getNextRoute(router.route, "down");
+						router.push(scrollRef.current.page);
+					}} />
 				}
 			</AnimatePresence>
 		</div>

@@ -6,6 +6,7 @@ import { useState } from "react";
 import ProjectLinks from '../components/ProjectLinks';
 import ProjectColumn from "../components/ProjectColumn";
 import { projects } from '../mocks/data';
+import { useRouter } from "next/router";
 
 export const ordering = {
     CHRONOLOGICAL: 0,
@@ -40,7 +41,7 @@ export type Project = {
 }
 
 const Progetti: NextPage = () => {
-
+    const { route } = useRouter();
     const [order, setOrder] = useState(ordering.CHRONOLOGICAL);
     const [prjs, setPorjects] = useState(projects);
     const getKey = () => {
@@ -71,7 +72,6 @@ const Progetti: NextPage = () => {
         arr.sort((a,b) => a[0] < b[0] ? -1 : 1)
         return arr;
     }
-    console.log(getPrjsArray());
     const sideLinks = [
         {
             text: "Data",
@@ -99,6 +99,7 @@ const Progetti: NextPage = () => {
             <ProjectLinks links={sideLinks} currentOrdering={order} />
             <AnimatePresence>
             {
+                route === "/progetti" &&
                 renderObject().map((p, i) => (
                     <ProjectColumn key={`col-${i}`} title={p[0]} projects={p[1]} />
                 ))

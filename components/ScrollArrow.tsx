@@ -72,7 +72,6 @@ const ScrollArrow: React.FC<ScrollArrowProps> = ({ onClick }) => {
                     />
                 </svg>
             </svg>
-            <span>SCROLL DOWN</span>
         </motion.div>
     );
 }
