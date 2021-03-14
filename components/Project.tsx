@@ -16,34 +16,20 @@ const Project: React.FC<ProjectProps> = ({ project }) => {
             scale: 1.3
         }
     }
-    const spanVar: Variants = {
-        initial: {
-            scale: .5,
-            opacity: 0,
-            x: "-50%",
-            y: "0%",
-        },
-        hover: {
-            scale: 1,
-            opacity: 1,
-            x: "-50%",
-            y: "calc(-100% - 10px)",
-        }
-    }
     return (
         <motion.div
             initial="initial"
             whileHover="hover"
             variants={projectVar}
             className={styles.project}
+            layout
         >
             <img src={image} alt={title}/>
-            <motion.span 
+            <span 
                 className={styles.tooltip}
-                variants={spanVar}
             >
                 { title.toUpperCase() }
-            </motion.span>
+            </span>
         </motion.div>
     );
 }
