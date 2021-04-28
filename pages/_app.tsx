@@ -7,6 +7,8 @@ import { clamp } from "../helpers";
 import SideNav from "../components/SideNav";
 import InfoContainer from '../components/InfoContainer';
 import ScrollArrow from '../components/ScrollArrow';
+import AppContext from "../context/AppContext";
+import { SWRConfig } from "swr";
 
 type Direction = "up" | "down";
 
@@ -44,7 +46,7 @@ const App: React.FC<AppProps> = ({ Component, pageProps, router }) => {
 			}
 		}, 200);
 	}
-	return router.route !== '/admin' ? (
+	return !/\/admin/.test(router.route) ? (
 		<div 
 			className="app"
 			onWheel={onWheel}
@@ -68,7 +70,17 @@ const App: React.FC<AppProps> = ({ Component, pageProps, router }) => {
 				}
 			</AnimatePresence>
 		</div>
-	) : <Component {...pageProps} />;
+	) : (
+		<AppContext>
+			<SWRConfig
+                value={{
+                    fetcher: (resource, init) => fetch(resource, init).then(r => r.json())
+                }}
+            >            
+				<Component {...pageProps} />
+            </SWRConfig>
+		</AppContext>
+	);
 };
 
 export default App;
