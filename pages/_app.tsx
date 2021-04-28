@@ -7,6 +7,7 @@ import { clamp } from "../helpers";
 import SideNav from "../components/SideNav";
 import InfoContainer from '../components/InfoContainer';
 import ScrollArrow from '../components/ScrollArrow';
+import AppContext from "../context/AppContext";
 
 type Direction = "up" | "down";
 
@@ -45,29 +46,31 @@ const App: React.FC<AppProps> = ({ Component, pageProps, router }) => {
 		}, 200);
 	}
 	return (
-		<div 
-			className="app"
-			onWheel={onWheel}
-		>
-			<Navbar isOnTop={router.route !== "/"} linksVisible={router.route === "/progetti"} />
-			<div id="mainContainer">
-				<AnimatePresence exitBeforeEnter>
-					<Component {...pageProps} key={router.route} />
+		<AppContext>
+			<div 
+				className="app"
+				onWheel={onWheel}
+			>
+				<Navbar isOnTop={router.route !== "/"} linksVisible={router.route === "/progetti"} />
+				<div id="mainContainer">
+					<AnimatePresence exitBeforeEnter>
+						<Component {...pageProps} key={router.route} />
+					</AnimatePresence>
+					<SideNav isVisible={router.route !== "/"} />
+					<InfoContainer isVisible={router.route !== "/"} />
+				</div>
+				<AnimatePresence>
+					{
+						router.route !== "/progetti" &&
+						<ScrollArrow onClick={() => {
+							scrollRef.current.pixels = 0;
+							scrollRef.current.page = getNextRoute(router.route, "down");
+							router.push(scrollRef.current.page);
+						}} />
+					}
 				</AnimatePresence>
-				<SideNav isVisible={router.route !== "/"} />
-				<InfoContainer isVisible={router.route !== "/"} />
 			</div>
-			<AnimatePresence>
-				{
-					router.route !== "/progetti" &&
-					<ScrollArrow onClick={() => {
-						scrollRef.current.pixels = 0;
-						scrollRef.current.page = getNextRoute(router.route, "down");
-						router.push(scrollRef.current.page);
-					}} />
-				}
-			</AnimatePresence>
-		</div>
+		</AppContext>
 	);
 };
 
