@@ -7,7 +7,7 @@ import { motion, Variants } from "framer-motion";
 
 type ColumnProps = {
     title: string,
-    projects: ProjectType[]
+    projects: ProjectType[] 
 }
 
 const ProjectColumn: React.FC<ColumnProps> = ({ title, projects }) => {
