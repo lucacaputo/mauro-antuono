@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { API_BASE } from '../../helpers/index';
 import { useAppContext } from '../../context/AppContext';
+import { useRouter } from 'next/router';
 
 type LoginState = {
     username: string,
@@ -8,6 +9,7 @@ type LoginState = {
 }
 
 const LoginForm: React.FC = () => {
+    const router = useRouter();
     const [_, setUserData] = useAppContext();
     const [state, setState] = useState<LoginState>({
         username: '',
@@ -38,15 +40,13 @@ const LoginForm: React.FC = () => {
             })
             .then(json => {
                 if (json.hasOwnProperty('ok') && json.ok) {
-                    window.localStorage.setItem('userData', JSON.stringify({
-                        username: json.username,
-                        token: json.token,
-                    }));
-                    const { ok, ...rest } = json;
+                    window.localStorage.setItem('token', json.token);
+                    window.localStorage.setItem('username', json.username);
                     setUserData({
                         isLoggedIn: true,
-                        ...rest,
+                        username: json.username,
                     });
+                    router.push('/admin');
                 } else {
                     console.log('response not ok');
                     reset();
