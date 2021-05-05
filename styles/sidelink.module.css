@@ -1,0 +1,33 @@
+.link {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    cursor: pointer;
+    position: relative;
+}
+.selectedBar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    z-index: 1;
+    background-color: var(--primary);
+}
+.link a {
+    display: flex;
+    width: 100%;
+    padding: 15px;
+    align-items: center;
+}
+.link a span {
+    font-size: 16px;
+    color: #eee;
+}
+.linkIconWrapper {
+    height: 40px;
+    width: 40px;
+    padding-right: 25px;
+    box-sizing: content-box;
+}

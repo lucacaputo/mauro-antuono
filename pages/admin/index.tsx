@@ -4,7 +4,26 @@ import { useAppContext } from '../../context/AppContext';
 import useSWR from "swr";
 import { API_BASE } from '../../helpers/index';
 import { useRouter } from "next/router";
-import Sidebar, {  } from "../../components/admin/Sidebar";
+import Sidebar, { LinkType } from "../../components/admin/Sidebar";
+import { AiFillFolderOpen, AiFillFilePdf, AiFillPicture } from "react-icons/ai";
+
+const lnks: LinkType[] = [
+    {
+        text: 'Projects',
+        to: '/admin/projects',
+        icon: <AiFillFolderOpen color="#eee" size="100%" />
+    },
+    {
+        text: 'PDFs',
+        to: '/admin/pdfs',
+        icon: <AiFillFilePdf color="#eee" size="100%" />
+    },
+    {
+        text: 'Images',
+        to: '/admin/Images',
+        icon: <AiFillPicture color="#eee" size="100%" />
+    },
+];
 
 const Admin: NextPage = () => {
     const [userData, _] = useAppContext();
@@ -33,7 +52,7 @@ const Admin: NextPage = () => {
                     crossOrigin="anonymous" 
                 />
             </Head>
-            <Sidebar titleText={`welcome, ${ userData.username }`} links={[]} />
+            <Sidebar titleText={`welcome, ${ userData.username }`} links={lnks} />
         </>
     );
 }

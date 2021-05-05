@@ -2,10 +2,12 @@ import { motion, Variants } from "framer-motion";
 import { useState } from "react";
 import styles from "../../styles/sidebar.module.css";
 import Link from "next/link";
+import SideLink from "./SideLink";
 
-type LinkType = {
+export type LinkType = {
     text: string,
     to: string,
+    icon: React.ReactNode,
 }
 type SideProps = {
     links: LinkType[],
@@ -64,6 +66,11 @@ const Sidebar: React.FC<SideProps> = ({ links, titleText, position='left', start
                     />
                 </div>
             </div>
+            <ul className={styles.links}>
+                {
+                    links.map(el => <SideLink link={el} key={el.text} />)
+                }
+            </ul>
         </motion.nav>
     );
 }
