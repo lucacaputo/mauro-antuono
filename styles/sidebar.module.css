@@ -1,0 +1,64 @@
+.nvbr {
+    position: fixed;
+    top: 0;
+    height: 100vh;
+    z-index: 10;
+    background-color: #141414;
+    overflow: hidden;
+}
+.navHeader {
+    width: 60px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    padding: 0 10px;
+    line-height: 1;
+}
+.navHeaderWrapper {
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    width: 300px;
+}
+.navHeaderWrapper h2 {
+    font-size: 18px;
+    font-weight: 400;
+    display: inline-block;
+    min-width: max-content;
+    padding-left: 1rem;
+    color: #eee;
+    margin: 0;
+}
+.ml {
+    font-size: 25px;
+    font-weight: 700;
+    color: #eee;
+}
+.ml:hover {
+    text-decoration: none;
+    color: #eee;
+}
+.collapserWrapper {
+    padding: 20px 10px;
+    position: relative;
+}
+.switch {
+    width: 45px;
+    height: 25px;
+    padding: 3px;
+    border-radius: 20px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    background: transparent;
+    border: 1px solid #eee;
+}
+.handle {
+    width: 15px;
+    height: 15px;
+    background: #eee;
+    border-radius: 50%;
+}

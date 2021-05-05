@@ -4,6 +4,7 @@ import { useAppContext } from '../../context/AppContext';
 import useSWR from "swr";
 import { API_BASE } from '../../helpers/index';
 import { useRouter } from "next/router";
+import Sidebar, {  } from "../../components/admin/Sidebar";
 
 const Admin: NextPage = () => {
     const [userData, _] = useAppContext();
@@ -14,7 +15,7 @@ const Admin: NextPage = () => {
         }
     }).then(r => r.json());
     const router = useRouter();
-    const { data, error, isValidating } = useSWR(`${API_BASE}/auth/checkLogin`, fetcher);
+    const { data, error, isValidating } = useSWR(`${API_BASE}/auth/checkLogin`, fetcher, { revalidateOnFocus: false });
     if (isValidating) return <p style={{ fontSize: 20, fontWeight: 700, textAlign: 'center', padding: 20 }}>Loading...</p>;
     if (!data.isLoggedIn || error !== undefined) {
         console.log("error", JSON.stringify(data), error);
@@ -32,7 +33,7 @@ const Admin: NextPage = () => {
                     crossOrigin="anonymous" 
                 />
             </Head>
-            welcome, { userData.username }
+            <Sidebar titleText={`welcome, ${ userData.username }`} links={[]} />
         </>
     );
 }
