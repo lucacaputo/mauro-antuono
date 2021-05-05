@@ -27,7 +27,7 @@ const Sidebar: React.FC<SideProps> = ({ links, titleText, position='left', start
             width: collapsed ? 70 : 300,
             transition: {
                 type: 'spring',
-                damping: 125,
+                damping: 75,
                 stiffness: 500,
                 mass: 1, 
             }
