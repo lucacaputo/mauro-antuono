@@ -4,6 +4,7 @@
     height: 100vh;
     z-index: 10;
     background-color: #141414;
+    box-shadow: .5rem 0 1rem rgba(0,0,0,.4);
     overflow: hidden;
 }
 .navHeader {
