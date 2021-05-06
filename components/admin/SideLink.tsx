@@ -29,9 +29,20 @@ const SideLink: React.FC<SideLinkProps> = ({ link }) => {
             x: hovered ? 12 : 0,
             transition: {
                 type: 'spring',
-                stiffness: 50,
+                stiffness: 100,
                 damping: 15,
                 mass: 1,
+            }
+        }
+    }
+    const liVars: Variants = {
+        initial: {
+            background: "#141414",
+        },
+        animate: {
+            background: hovered ?  "#2e2e2e" : "#141414",
+            transition: {
+                duration: .2,
             }
         }
     }
@@ -41,6 +52,9 @@ const SideLink: React.FC<SideLinkProps> = ({ link }) => {
             className={styles.link}
             onHoverStart={() => setHovered(true)}
             onHoverEnd={() => setHovered(false)}
+            initial="initial"
+            animate="animate"
+            variants={liVars}
         >
             <motion.span 
                 className={styles.selectedBar} 
