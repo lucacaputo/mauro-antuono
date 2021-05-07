@@ -48,7 +48,6 @@ const SideLink: React.FC<SideLinkProps> = ({ link }) => {
     }
     return (
         <motion.li
-            key={link.text}
             className={styles.link}
             onHoverStart={() => setHovered(true)}
             onHoverEnd={() => setHovered(false)}

@@ -54,7 +54,7 @@ const Sidebar: React.FC<SideProps> = ({ links, titleText, position='left', start
                     className={styles.switch}
                     style={{ justifyContent: collapsed ? 'flex-end' : 'flex-start' }}
                     onClick={toggle}
-               >
+                >
                     <motion.div 
                         className={styles.handle}
                         transition={{
