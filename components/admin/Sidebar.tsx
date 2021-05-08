@@ -3,6 +3,7 @@ import { useState } from "react";
 import styles from "../../styles/sidebar.module.css";
 import Link from "next/link";
 import SideLink from "./SideLink";
+import { useAppContext } from "../../context/AppContext";
 
 export type LinkType = {
     text: string,
@@ -13,10 +14,9 @@ type SideProps = {
     links: LinkType[],
     position?: 'left' | 'right',
     startCollapsed?: boolean,
-    titleText: string,
 }
 
-const Sidebar: React.FC<SideProps> = ({ links, titleText, position='left', startCollapsed=false }) => {
+const Sidebar: React.FC<SideProps> = ({ links, position='left', startCollapsed=false }) => {
     const [collapsed, setCollapsed] = useState(startCollapsed);
     const toggle = () => setCollapsed(c => !c);
     const sideVars: Variants = {
@@ -33,6 +33,7 @@ const Sidebar: React.FC<SideProps> = ({ links, titleText, position='left', start
             }
         }
     }
+    const { username } = useAppContext()[0];
     return (
         <motion.nav 
             className={styles.nvbr}
@@ -47,7 +48,7 @@ const Sidebar: React.FC<SideProps> = ({ links, titleText, position='left', start
                         <a className={styles.ml}>ML</a>
                     </Link>
                 </div>
-                <h2>{titleText}</h2>
+                <h2>welcome, {username}</h2>
             </div>
             <div className={styles.collapserWrapper}>
                 <div 

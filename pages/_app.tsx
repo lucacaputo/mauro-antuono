@@ -9,8 +9,28 @@ import InfoContainer from '../components/InfoContainer';
 import ScrollArrow from '../components/ScrollArrow';
 import AppContext from "../context/AppContext";
 import { SWRConfig } from "swr";
+import { AiFillFolderOpen, AiFillFilePdf, AiFillPicture } from "react-icons/ai";
+import Sidebar, { LinkType } from "../components/admin/Sidebar";
 
 type Direction = "up" | "down";
+
+const lnks: LinkType[] = [
+    {
+        text: 'Projects',
+        to: '/admin/projects',
+        icon: <AiFillFolderOpen color="#eee" size="100%" />
+    },
+    {
+        text: 'PDFs',
+        to: '/admin/pdfs',
+        icon: <AiFillFilePdf color="#eee" size="100%" />
+    },
+    {
+        text: 'Images',
+        to: '/admin/Images',
+        icon: <AiFillPicture color="#eee" size="100%" />
+    },
+];
 
 const NavigateThreshold = 500;
 const getNextRoute = (route: string, direction: Direction) => {
@@ -46,7 +66,7 @@ const App: React.FC<AppProps> = ({ Component, pageProps, router }) => {
 			}
 		}, 200);
 	}
-	return !/\/admin/.test(router.route) ? (
+	return !/\/admin/gm.test(router.route) ? (
 		<div 
 			className="app"
 			onWheel={onWheel}
@@ -77,6 +97,7 @@ const App: React.FC<AppProps> = ({ Component, pageProps, router }) => {
                     fetcher: (resource, init) => fetch(resource, init).then(r => r.json())
                 }}
             >            
+				<Sidebar links={lnks} />
 				<Component {...pageProps} />
             </SWRConfig>
 		</AppContext>
