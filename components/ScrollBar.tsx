@@ -13,9 +13,10 @@ const ScrollBar: React.FC<ScrollBarProps> = ({ clampTo, clampFrom, initialScroll
     const scroll = useMotionValue(initialScroll);
     const width = useTransform(scroll, x => clamp(x, clampTo, clampFrom));
     useEffect(() => {
+        const ratio = window.innerWidth / window.innerHeight;
         const wheel = (evt: WheelEvent) => {
             const { deltaY } = evt;
-            scroll.set(width.get() + deltaY );
+            scroll.set(width.get() + (deltaY * ratio));
         }
         window.addEventListener('wheel', wheel);
         return () => window.removeEventListener('wheel', wheel);
