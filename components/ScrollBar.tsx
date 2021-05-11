@@ -1,31 +1,35 @@
-import { motion } from "framer-motion";
+import { motion, useMotionValue, useTransform } from "framer-motion";
 import styles from "../styles/scrollbar.module.css";
-import { useLayoutEffect, useRef } from "react";
-import { useRouter } from "next/router";
 import { clamp } from "../helpers";
+import { useEffect } from 'react';
 
 type ScrollBarProps = {
     clampTo: number,
+    clampFrom: number,
+    initialScroll: number,
 }
 
-const ScrollBar: React.FC<ScrollBarProps> = ({ clampTo }) => {
-    const scrollRef = useRef<number>(0);
-    const router = useRouter();
-    useLayoutEffect(() => {
-        switch(router.route) {
-            case '/':
-                scrollRef.current = 0;
-                break;
-            case '/progetti':
-                scrollRef.current = 2 * clampTo;
-                break;
-            default:
-                scrollRef.current = clampTo;
+const ScrollBar: React.FC<ScrollBarProps> = ({ clampTo, clampFrom, initialScroll }) => {
+    const scroll = useMotionValue(initialScroll);
+    const height = useTransform(scroll, x => clamp(x, clampTo, clampFrom));
+    useEffect(() => {
+        const wheel = (evt: WheelEvent) => {
+            const { deltaY } = evt;
+            scroll.set(height.get() + deltaY);
         }
-    }, [router.route]);
+        window.addEventListener('wheel', wheel);
+        return () => window.removeEventListener('wheel', wheel);
+    }, []);
     return (
         <motion.div 
             className={styles.scrollBar}
+            style={{ height }}
+            transition={{
+                type: 'spring',
+                stiffness: 200,
+                damping: 20,
+                mass: 1,
+            }}
         />
     );
 }

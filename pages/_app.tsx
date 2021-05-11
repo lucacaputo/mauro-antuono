@@ -11,6 +11,8 @@ import AppContext from "../context/AppContext";
 import { SWRConfig } from "swr";
 import { AiFillFolderOpen, AiFillFilePdf, AiFillPicture } from "react-icons/ai";
 import Sidebar, { LinkType } from "../components/admin/Sidebar";
+import ScrollBar from "../components/ScrollBar";
+import { useEffect, useState } from 'react';
 
 type Direction = "up" | "down";
 
@@ -32,7 +34,6 @@ const lnks: LinkType[] = [
     },
 ];
 
-const NavigateThreshold = 500;
 const getNextRoute = (route: string, direction: Direction) => {
 	if (direction === "down") {
 		if (route === "/") return "/esperienze";
@@ -66,11 +67,24 @@ const App: React.FC<AppProps> = ({ Component, pageProps, router }) => {
 			}
 		}, 200);
 	}
+	const [loaded, setLoaded] = useState(false);
+	const [NavigateThreshold, setNavigateThreshold] = useState(200);
+	useEffect(() => {
+		setLoaded(true);
+		setNavigateThreshold(window.innerHeight / 3);
+	}, []);
+	const getClamp = (): { clampFrom: number, clampTo: number, initialScroll: number, } => {
+		if (!loaded) return { clampFrom: 0, clampTo: 0, initialScroll: 0 };
+		if (router.route === '/') return { clampTo: window.innerHeight / 3, clampFrom: 0, initialScroll: scrollRef.current.pixels };
+		if (router.route === '/progetti') return { clampTo: window.innerHeight, clampFrom: (window.innerHeight / 3) * 2, initialScroll: scrollRef.current.pixels };
+		return { clampTo: (window.innerHeight / 3) * 2, clampFrom: window.innerHeight / 3, initialScroll: scrollRef.current.pixels  };
+	}
 	return !/\/admin/gm.test(router.route) ? (
 		<div 
 			className="app"
 			onWheel={onWheel}
 		>
+			<ScrollBar {...getClamp()} />
 			<Navbar isOnTop={router.route !== "/"} linksVisible={router.route === "/progetti"} />
 			<div id="mainContainer">
 				<AnimatePresence exitBeforeEnter>
