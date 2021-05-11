@@ -75,9 +75,9 @@ const App: React.FC<AppProps> = ({ Component, pageProps, router }) => {
 	}, []);
 	const getClamp = (): { clampFrom: number, clampTo: number, initialScroll: number, } => {
 		if (!loaded) return { clampFrom: 0, clampTo: 0, initialScroll: 0 };
-		if (router.route === '/') return { clampTo: window.innerHeight / 3, clampFrom: 0, initialScroll: scrollRef.current.pixels };
-		if (router.route === '/progetti') return { clampTo: window.innerHeight, clampFrom: (window.innerHeight / 3) * 2, initialScroll: scrollRef.current.pixels };
-		return { clampTo: (window.innerHeight / 3) * 2, clampFrom: window.innerHeight / 3, initialScroll: scrollRef.current.pixels  };
+		if (router.route === '/') return { clampTo: window.innerWidth / 3, clampFrom: 0, initialScroll: scrollRef.current.pixels };
+		if (router.route === '/progetti') return { clampTo: window.innerWidth, clampFrom: (window.innerWidth / 3) * 2, initialScroll: scrollRef.current.pixels };
+		return { clampTo: (window.innerWidth / 3) * 2, clampFrom: window.innerWidth / 3, initialScroll: scrollRef.current.pixels  };
 	}
 	return !/\/admin/gm.test(router.route) ? (
 		<div 

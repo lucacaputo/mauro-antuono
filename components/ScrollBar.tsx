@@ -11,11 +11,11 @@ type ScrollBarProps = {
 
 const ScrollBar: React.FC<ScrollBarProps> = ({ clampTo, clampFrom, initialScroll }) => {
     const scroll = useMotionValue(initialScroll);
-    const height = useTransform(scroll, x => clamp(x, clampTo, clampFrom));
+    const width = useTransform(scroll, x => clamp(x, clampTo, clampFrom));
     useEffect(() => {
         const wheel = (evt: WheelEvent) => {
             const { deltaY } = evt;
-            scroll.set(height.get() + deltaY);
+            scroll.set(width.get() + deltaY );
         }
         window.addEventListener('wheel', wheel);
         return () => window.removeEventListener('wheel', wheel);
@@ -23,13 +23,7 @@ const ScrollBar: React.FC<ScrollBarProps> = ({ clampTo, clampFrom, initialScroll
     return (
         <motion.div 
             className={styles.scrollBar}
-            style={{ height }}
-            transition={{
-                type: 'spring',
-                stiffness: 200,
-                damping: 20,
-                mass: 1,
-            }}
+            style={{ width }}
         />
     );
 }
