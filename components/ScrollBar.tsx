@@ -6,11 +6,10 @@ import { useEffect } from 'react';
 type ScrollBarProps = {
     clampTo: number,
     clampFrom: number,
-    initialScroll: number,
 }
 
-const ScrollBar: React.FC<ScrollBarProps> = ({ clampTo, clampFrom, initialScroll }) => {
-    const scroll = useMotionValue(initialScroll);
+const ScrollBar: React.FC<ScrollBarProps> = ({ clampTo, clampFrom }) => {
+    const scroll = useMotionValue(clampFrom);
     const width = useTransform(scroll, x => clamp(x, clampTo, clampFrom));
     useEffect(() => {
         const ratio = window.innerWidth / window.innerHeight;

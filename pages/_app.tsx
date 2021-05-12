@@ -73,11 +73,11 @@ const App: React.FC<AppProps> = ({ Component, pageProps, router }) => {
 		setLoaded(true);
 		setNavigateThreshold(window.innerHeight / 3);
 	}, []);
-	const getClamp = (): { clampFrom: number, clampTo: number, initialScroll: number, } => {
-		if (!loaded) return { clampFrom: 0, clampTo: 0, initialScroll: 0 };
-		if (router.route === '/') return { clampTo: window.innerWidth / 3, clampFrom: 0, initialScroll: scrollRef.current.pixels };
-		if (router.route === '/progetti') return { clampTo: window.innerWidth, clampFrom: (window.innerWidth / 3) * 2, initialScroll: scrollRef.current.pixels };
-		return { clampTo: (window.innerWidth / 3) * 2, clampFrom: window.innerWidth / 3, initialScroll: scrollRef.current.pixels  };
+	const getClamp = (): { clampFrom: number, clampTo: number, } => {
+		if (!loaded) return { clampFrom: 0, clampTo: 0 };
+		if (router.route === '/') return { clampTo: window.innerWidth / 3, clampFrom: 0, };
+		if (router.route === '/progetti') return { clampTo: window.innerWidth, clampFrom: (window.innerWidth / 3) * 2, };
+		return { clampTo: (window.innerWidth / 3) * 2, clampFrom: window.innerWidth / 3, };
 	}
 	return !/\/admin/gm.test(router.route) ? (
 		<div 
