@@ -52,11 +52,11 @@ const App: React.FC<AppProps> = ({ Component, pageProps, router }) => {
 	});
 
 	const onWheel = (e: React.WheelEvent) => {
-		clearTimeout(throttle);
+		// clearTimeout(throttle);
 		const { deltaY } = e;
 		const direction: Direction = deltaY < 0 ? "up" : "down";
 		scrollRef.current.pixels = clamp(scrollRef.current.pixels + deltaY, NavigateThreshold, 0);
-		throttle = setTimeout(() => {
+		// throttle = setTimeout(() => {
 			if (scrollRef.current.pixels === NavigateThreshold || scrollRef.current.pixels === 0) {
 				const nextRoute = getNextRoute(router.route, direction);
 				if (router.route !== nextRoute) {
@@ -65,7 +65,7 @@ const App: React.FC<AppProps> = ({ Component, pageProps, router }) => {
 					router.push(scrollRef.current.page);
 				}
 			}
-		}, 200);
+		// }, 200);
 	}
 	const [loaded, setLoaded] = useState(false);
 	const [NavigateThreshold, setNavigateThreshold] = useState(200);
