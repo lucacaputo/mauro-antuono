@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { API_BASE } from '../../helpers/index';
+import { API_BASE, useAuth } from '../../helpers/index';
 import { useAppContext } from '../../context/AppContext';
 import { useRouter } from 'next/router';
 
@@ -15,6 +15,7 @@ const LoginForm: React.FC = () => {
         username: '',
         password: '',
     });
+    const { userData, loading, mutate } = useAuth();
     const { username, password } = state;
     const change = (evt: React.ChangeEvent) => setState(st => ({
         ...st,
@@ -46,7 +47,7 @@ const LoginForm: React.FC = () => {
                         isLoggedIn: true,
                         username: json.username,
                     });
-                    router.push('/admin');
+                    mutate();
                 } else {
                     console.log('response not ok');
                     reset();
@@ -56,6 +57,11 @@ const LoginForm: React.FC = () => {
                 console.log('error in request', err);
                 reset();
             });
+    }
+    if (loading) return <p style={{ textAlign: 'center', fontSize: 22, padding: 15, }}>Loading...</p>;
+    if (userData?.isLoggedIn) {
+        router.push('/admin');
+        return null;
     }
     return (
         <>

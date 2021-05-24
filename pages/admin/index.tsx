@@ -1,35 +1,56 @@
-import Head from 'next/head'
 import { NextPage } from "next";
 import useSWR from "swr";
-import { API_BASE } from '../../helpers/index';
+import { API_BASE, useAuth, submitHomeChanges, alternativeFetcher } from '../../helpers/index';
 import { useRouter } from "next/router";
+import SectionEditor from "../../components/admin/Editor";
+import { useRef } from 'react';
 
 const Admin: NextPage = () => {
-    const fetcher = (res: RequestInfo, init: RequestInit) => fetch(res, {
-        ...init,
-        headers: {
-            'Authorization': `Bearer ${window.localStorage.getItem('token')}`,
-        }
-    }).then(r => r.json());
     const router = useRouter();
-    const { data, error, isValidating } = useSWR(`${API_BASE}/auth/checkLogin`, fetcher, { revalidateOnFocus: false });
-    if (isValidating) return <p style={{ fontSize: 20, fontWeight: 700, textAlign: 'center', padding: 20 }}>Loading...</p>;
-    if (!data.isLoggedIn || error !== undefined) {
-        console.log("error", JSON.stringify(data), error);
-        router.push('/admin/login');
+    const { loading, error } = useAuth();
+    const texts = useRef({
+        esperienze: '',
+        formazione: '',
+        contatti: '',
+        interessi: '',
+        competenze: '',
+        _id: null,
+    });
+    const { data: homeData, error: homeError, isValidating, mutate } = useSWR(`${API_BASE}/homepage`, alternativeFetcher);
+    if (!isValidating && !homeError) {
+        const {__v, ...rest} = homeData;
+        texts.current = rest;
+    }
+    if (loading) return <p style={{ textAlign: 'center', padding: 15, fontSize: 22 }}>Loading...</p>;
+    if (error) {
+        console.log(error);
+        router.push("/admin/login");
         return null;
+    }
+    const onSubmit = async () => {
+        try {
+            const result = await submitHomeChanges(texts.current);
+            texts.current = result;
+            mutate();
+        } catch(err) {
+            console.log('error!!', err);
+        }
     }
     return (
         <>
-            <Head>
-                <title>Mario Longobardi | Admin</title>
-                <link 
-                    rel="stylesheet" 
-                    href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" 
-                    integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" 
-                    crossOrigin="anonymous" 
-                />
-            </Head>
+            <div className="container mainContainer py-5">
+                <SectionEditor initial={texts.current.esperienze} onChange={d => texts.current.esperienze = d} title="Esperienze" />
+                <SectionEditor initial={texts.current.formazione} onChange={d => texts.current.formazione = d} title="Formazione" />
+                <SectionEditor initial={texts.current.interessi} onChange={d => texts.current.interessi = d} title="Interessi" />
+                <SectionEditor initial={texts.current.competenze} onChange={d => texts.current.competenze = d} title="Competenze" />
+                <SectionEditor initial={texts.current.contatti} onChange={d => texts.current.contatti = d} title="Contatti" />
+                <button 
+                    className="btn d-block btn-success btn-md mx-auto"
+                    onClick={onSubmit}
+                >
+                    Save
+                </button>
+            </div>
         </>
     );
 }

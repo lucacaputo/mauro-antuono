@@ -13,6 +13,9 @@ import { AiFillFolderOpen, AiFillFilePdf, AiFillPicture } from "react-icons/ai";
 import Sidebar, { LinkType } from "../components/admin/Sidebar";
 import ScrollBar from "../components/ScrollBar";
 import { useEffect, useState } from 'react';
+import Head from "next/head";
+import * as ga from '../lib/ga'
+import "../styles/adminStyle.css";
 
 type Direction = "up" | "down";
 
@@ -70,9 +73,16 @@ const App: React.FC<AppProps> = ({ Component, pageProps, router }) => {
 	const [loaded, setLoaded] = useState(false);
 	const [NavigateThreshold, setNavigateThreshold] = useState(200);
 	useEffect(() => {
+		const handleRouteChange = (url) => {
+			ga.pageview(url)
+		}
+		router.events.on('routeChangeComplete', handleRouteChange)
 		setLoaded(true);
 		setNavigateThreshold(window.innerHeight / 3);
-	}, []);
+		return () => {
+			router.events.off('routeChangeComplete', handleRouteChange)
+		}
+	}, [router.events]);
 	const getClamp = (): { clampFrom: number, clampTo: number, } => {
 		if (!loaded) return { clampFrom: 0, clampTo: 0 };
 		if (router.route === '/') return { clampTo: window.innerWidth / 3, clampFrom: 0, };
@@ -105,16 +115,26 @@ const App: React.FC<AppProps> = ({ Component, pageProps, router }) => {
 			</AnimatePresence>
 		</div>
 	) : (
-		<AppContext>
-			<SWRConfig
+		<SWRConfig
                 value={{
-                    fetcher: (resource, init) => fetch(resource, init).then(r => r.json())
+                    fetcher: (resource, init) => fetch(resource, init).then(r => r.json()),
+					revalidateOnFocus: false,
                 }}
-            >            
-				<Sidebar links={lnks} />
+            > 
+			<AppContext>           
+				<Head>
+					<title>Mario Longobardi | Admin</title>
+					<link 
+						rel="stylesheet" 
+						href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" 
+						integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" 
+						crossOrigin="anonymous" 
+					/>
+				</Head>
+				<Sidebar startCollapsed links={lnks} />
 				<Component {...pageProps} />
-            </SWRConfig>
-		</AppContext>
+			</AppContext>
+        </SWRConfig>
 	);
 };
 

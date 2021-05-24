@@ -115,6 +115,21 @@
   resolved "https://registry.yarnpkg.com/@opentelemetry/context-base/-/context-base-0.14.0.tgz#c67fc20a4d891447ca1a855d7d70fa79a3533001"
   integrity sha512-sDOAZcYwynHFTbLo6n8kIbLiVF3a3BLkrmehJUyEbT9F+Smbi47kLGS2gG2g0fjBLR/Lr1InPD7kXL7FaTqEkw==
 
+"@tinymce/tinymce-react@^3.12.4":
+  version "3.12.4"
+  resolved "https://registry.yarnpkg.com/@tinymce/tinymce-react/-/tinymce-react-3.12.4.tgz#5c1bc317e660b8abd743940e2d0b5cdaf6c86f73"
+  integrity sha512-/zmIowylupAd52UyTEcSazxibmPJg5yi0FPAY0pb5kHpq4pUpS7Kxq3Pafuy3N+U/CCh+x7DAbUcnreOT0OMsA==
+  dependencies:
+    prop-types "^15.6.2"
+    tinymce "^5.7.1"
+
+"@types/jquery@*":
+  version "3.5.5"
+  resolved "https://registry.yarnpkg.com/@types/jquery/-/jquery-3.5.5.tgz#2c63f47c9c8d96693d272f5453602afd8338c903"
+  integrity sha512-6RXU9Xzpc6vxNrS6FPPapN1SxSHgQ336WC6Jj/N8q30OiaBZ00l1GBgeP7usjVZPivSkGUfL1z/WW6TX989M+w==
+  dependencies:
+    "@types/sizzle" "*"
+
 "@types/node@^14.14.31":
   version "14.14.31"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-14.14.31.tgz#72286bd33d137aa0d152d47ec7c1762563d34055"
@@ -139,6 +154,18 @@
   dependencies:
     "@types/prop-types" "*"
     csstype "^3.0.2"
+
+"@types/sizzle@*":
+  version "2.3.3"
+  resolved "https://registry.yarnpkg.com/@types/sizzle/-/sizzle-2.3.3.tgz#ff5e2f1902969d305225a047c8a0fd5c915cebef"
+  integrity sha512-JYM8x9EGF163bEyhdJBpR2QX1R5naCJHC8ucJylJ3w9/CVBaskdQ8WqBf8MmQrd1kRvp/a4TS8HJ+bxzR7ZJYQ==
+
+"@types/tinymce@^4.6.1":
+  version "4.6.1"
+  resolved "https://registry.yarnpkg.com/@types/tinymce/-/tinymce-4.6.1.tgz#36b2c1506fafdad2b94fdd3fd43bb1455b2e30af"
+  integrity sha512-6iUthk3BxMx4+M7uSi763g+tbefomkFjtI7wlVNKWuxdejE688OG0lfVZ1kFiSECBQBR3aqEpLZb4YvTfbgy1Q==
+  dependencies:
+    "@types/jquery" "*"
 
 anser@1.4.9:
   version "1.4.9"
@@ -1411,7 +1438,7 @@ process@0.11.10, process@^0.11.10:
   resolved "https://registry.yarnpkg.com/process/-/process-0.11.10.tgz#7332300e840161bda3e69a1d1d91a7d4bc16f182"
   integrity sha1-czIwDoQBYb2j5podHZGn1LwW8YI=
 
-prop-types@15.7.2:
+prop-types@15.7.2, prop-types@^15.6.2:
   version "15.7.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
   integrity sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==
@@ -1903,6 +1930,11 @@ timers-browserify@^2.0.4:
   integrity sha512-9phl76Cqm6FhSX9Xe1ZUAMLtm1BLkKj2Qd5ApyWkXzsMRaA7dgr81kf4wJmQf/hAvg8EEyJxDo3du/0KlhPiKQ==
   dependencies:
     setimmediate "^1.0.4"
+
+tinymce@^5.7.1:
+  version "5.8.0"
+  resolved "https://registry.yarnpkg.com/tinymce/-/tinymce-5.8.0.tgz#3ffd1d96da2619153bd0bd2023a382052339bb0a"
+  integrity sha512-1bOI3k+1D76rVjAJC3XkHezXJVghurnKBDREF1STHBLTQUY17XTbaDNJUxNgJqJHa2xg1udd5I1bzdfSd77DGw==
 
 to-arraybuffer@^1.0.0:
   version "1.0.1"
