@@ -4,8 +4,38 @@ import { API_BASE, useAuth, submitHomeChanges, alternativeFetcher } from '../../
 import { useRouter } from "next/router";
 import SectionEditor from "../../components/admin/Editor";
 import { useRef } from 'react';
+import { motion, Variants } from "framer-motion";
 
 const Admin: NextPage = () => {
+    const buttonVars: Variants = {
+        initial: {
+            scale: .8,
+            y: 0,
+            x: "calc(-50% + 37.5px)",
+            boxShadow: '0px 0px 6px #141414',
+        },
+        animate: {
+            scale: 1,
+            y: -70,
+            x: "calc(-50% + 37.5px)",
+            transition: {
+                type: 'spring',
+                stiffness: 350,
+                damping: 15,
+            }
+        },
+        hover: {
+            scale: 1.1,
+            y: -70,
+            x: "calc(-50% + 37.5px)",
+            boxShadow: '0px 2px 12px #141414',
+            transition: {
+                type: 'spring',
+                stiffness: 350,
+                damping: 20,
+            }
+        }
+    };
     const router = useRouter();
     const { loading, error } = useAuth();
     const texts = useRef({
@@ -44,12 +74,16 @@ const Admin: NextPage = () => {
                 <SectionEditor initial={texts.current.interessi} onChange={d => texts.current.interessi = d} title="Interessi" />
                 <SectionEditor initial={texts.current.competenze} onChange={d => texts.current.competenze = d} title="Competenze" />
                 <SectionEditor initial={texts.current.contatti} onChange={d => texts.current.contatti = d} title="Contatti" />
-                <button 
-                    className="btn d-block btn-success btn-md mx-auto"
+                <motion.button 
+                    variants={buttonVars}
+                    initial="initial"
+                    animate="animate"
+                    whileHover="hover"
+                    className="d-block subBtn"
                     onClick={onSubmit}
                 >
                     Save
-                </button>
+                </motion.button>
             </div>
         </>
     );

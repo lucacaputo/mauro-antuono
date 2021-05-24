@@ -4,3 +4,17 @@
 .mainContainer {
     padding-left: 85px;
 }
+.subBtn {
+    position: fixed;
+    left: 50%;
+    top: 100%;
+    z-index: 5;
+    width: max-content;
+    max-width: 300px;
+    padding: 10px 45px;
+    border-radius: 20px;
+    cursor: pointer;
+    border: none;
+    color: #fff;
+    background: var(--success);
+}
