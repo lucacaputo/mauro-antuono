@@ -42,7 +42,6 @@ export const submitHomeChanges = async (
         _id?: string,
     }
 ) => {
-    console.log(data);
     return await fetch(`${API_BASE}/homepage`, {
         method: 'POST',
         body: JSON.stringify(data),
