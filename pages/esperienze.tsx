@@ -43,12 +43,7 @@ const Esperienze: NextPage = () => {
             </Head>
             <p dangerouslySetInnerHTML={{
                 __html: `${content}`
-            }}>
-                {/* {<strong className={styles.black}>Stage</strong> <br />
-                <a href="https://gptarchitetti.ch/" target="_blank">G.P.T. Associati</a><br />
-                Balerna<br />
-                set 2017 - ago 2018} */}
-            </p>
+            }} />
         </motion.div>,
         parent
     ) : null

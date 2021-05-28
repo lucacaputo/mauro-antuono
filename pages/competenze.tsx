@@ -43,18 +43,7 @@ const Competenze: NextPage = () => {
             </Head>
             <p dangerouslySetInnerHTML={{
                 __html: `${content}`
-            }}>
-                {/* {AutoCAD<br />
-                Revit<br />
-                Photoshop<br /><br />
-                <strong className={styles.black}>Strumenti e Tecnologie</strong><br />
-                Lumion, ArchiCAD, Maxon Cinema 4D, Adobe Illustrator, Adobe Indesign, pacchetto Office<br /><br />
-                <strong className={styles.black}>Competenze interpersonali</strong><br />
-                Lavoro in team<br /><br />
-                <strong className={styles.black}>Lingue</strong><br />
-                Lingua italiana<br />
-                Linua inglese} */}
-            </p>
+            }} />
         </motion.div>,
         parent
     ) : null

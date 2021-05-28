@@ -43,14 +43,7 @@ const Formazione: NextPage = () => {
             </Head>
             <p dangerouslySetInnerHTML={{
                 __html: `${content}`
-            }}>
-                {/* {<strong className={styles.black}>
-                    Scuola universitria professionale della Svizzera Italiana (SUPSI)
-                </strong><br />
-                Bachelor of Architecture_BArch, Architettura 2018-2021<br /><br />
-                <strong className={styles.black}>Liceo scientifico linguistico Paolo Giovio</strong><br />
-                Diploma di maturità scientifica 2011-2016} */}
-            </p>
+            }} />
         </motion.div>,
         parent
     ) : null

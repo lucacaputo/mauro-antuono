@@ -41,45 +41,6 @@ const Contatti: NextPage = () => {
             <Head>
                 <title>Mario Longobardi | Contatti</title>
             </Head>
-            {/* {<table
-                cellSpacing="30"
-                className={styles.table}
-            >
-                <tbody>
-                    <tr>
-                        <td>
-                            E-mail:
-                        </td>
-                        <td>
-                            <a href="mailto:longobardi.mario@outlook.it">longobardi.mario@outlook.it</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            Tel:
-                        </td>
-                        <td>
-                            <a href="tel:+39 340 9229533">+39 340 9229533</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            Instagram:
-                        </td>
-                        <td>
-                            <a href="https://www.instagram.com/mariolongobardi_/" target="_blank" rel="noopener noreferrer">@mariolongobardi_</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            LinkedIn:
-                        </td>
-                        <td>
-                            <a href="https://www.linkedin.com/in/mario-antonio-longobardi-b8746a187/" target="_blank" rel="noopener noreferrer">Mario Antonio Longobardi</a>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>} */}
             <p dangerouslySetInnerHTML={{
                 __html: `${content}`
             }} />
