@@ -55,7 +55,7 @@ export const submitHomeChanges = async (
 }
 
 export const fetchHomeSection = async (section: string, callback: Function) => {
-    fetch(`${API_BASE}/homepage`)
+    await fetch(`${API_BASE}/homepage`)
         .then(r => r.json())
         .then(r => {
             if (r.hasOwnProperty(section)) callback(r[section]);
