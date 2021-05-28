@@ -52,4 +52,14 @@ export const submitHomeChanges = async (
     })
     .then(r => r.json())
     .catch(err => { throw new Error(`fetch failed\n${err}`) })
-} 
+}
+
+export const fetchHomeSection = async (section: string, callback: Function) => {
+    fetch(`${API_BASE}/homepage`)
+        .then(r => r.json())
+        .then(r => {
+            if (r.hasOwnProperty(section)) callback(r[section]);
+            else throw new Error('response doesn\'t container correct fields\n' + JSON.stringify(r));
+        })
+        .catch(err => console.log(err));
+}

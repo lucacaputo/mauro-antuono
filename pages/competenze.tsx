@@ -4,13 +4,16 @@ import { createPortal } from "react-dom";
 import { useEffect, useState } from 'react';
 import { motion, Variants } from "framer-motion";
 import styles from "../styles/competenze.module.css";
+import { fetchHomeSection } from '../helpers';
 
 const Competenze: NextPage = () => {
 
     const [parent, setParent] = useState<null | Element>(null);
+    const [content, setContent] = useState<string>('');
     useEffect(() => {
         setParent(document.querySelector("#infoCont"));
-    }, [parent]);
+        fetchHomeSection('competenze', setContent);
+    }, [parent, content]);
 
     const compVar: Variants = {
         initial: {
@@ -38,8 +41,10 @@ const Competenze: NextPage = () => {
             <Head>
                 <title>Mario Longobardi | Competenze</title>
             </Head>
-            <p>
-                AutoCAD<br />
+            <p dangerouslySetInnerHTML={{
+                __html: `${content}`
+            }}>
+                {/* {AutoCAD<br />
                 Revit<br />
                 Photoshop<br /><br />
                 <strong className={styles.black}>Strumenti e Tecnologie</strong><br />
@@ -48,7 +53,7 @@ const Competenze: NextPage = () => {
                 Lavoro in team<br /><br />
                 <strong className={styles.black}>Lingue</strong><br />
                 Lingua italiana<br />
-                Linua inglese
+                Linua inglese} */}
             </p>
         </motion.div>,
         parent

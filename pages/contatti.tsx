@@ -4,13 +4,16 @@ import { NextPage } from "next"
 import { useEffect, useState } from 'react';
 import { motion, Variants } from "framer-motion";
 import styles from "../styles/contatti.module.css";
+import { fetchHomeSection } from '../helpers';
 
 const Contatti: NextPage = () => {
 
     const [parent, setParent] = useState<null | Element>(null);
+    const [content, setContent] = useState<string>('');
     useEffect(() => {
         setParent(document.querySelector("#infoCont"));
-    }, [parent]);
+        fetchHomeSection('contatti', setContent);
+    }, [parent, content]);
 
     const contVar: Variants = {
         initial: {
@@ -38,7 +41,7 @@ const Contatti: NextPage = () => {
             <Head>
                 <title>Mario Longobardi | Contatti</title>
             </Head>
-            <table
+            {/* {<table
                 cellSpacing="30"
                 className={styles.table}
             >
@@ -76,7 +79,10 @@ const Contatti: NextPage = () => {
                         </td>
                     </tr>
                 </tbody>
-            </table>
+            </table>} */}
+            <p dangerouslySetInnerHTML={{
+                __html: `${content}`
+            }} />
         </motion.div>,
         parent
     ) : null

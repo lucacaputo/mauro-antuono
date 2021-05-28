@@ -4,13 +4,16 @@ import { createPortal } from "react-dom";
 import { useEffect, useState } from 'react';
 import { motion, Variants } from "framer-motion";
 import styles from "../styles/interessi.module.css";
+import { fetchHomeSection } from '../helpers';
 
 const Interessi: NextPage = () => {
 
     const [parent, setParent] = useState<null | Element>(null);
+    const [content, setContent] = useState<string>('');
     useEffect(() => {
         setParent(document.querySelector("#infoCont"));
-    }, [parent]);
+        fetchHomeSection('interessi', setContent);
+    }, [parent, content]);
 
     const intVar: Variants = {
         initial: {
@@ -38,7 +41,9 @@ const Interessi: NextPage = () => {
             <Head>
                 <title>Mario Longobardi | Interessi</title>
             </Head>
-            
+            <p dangerouslySetInnerHTML={{
+                __html: `${content}`
+            }} />
         </motion.div>,
         parent
     ) : null
