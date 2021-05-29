@@ -18,3 +18,11 @@
     color: #fff;
     background: var(--success);
 }
+.picker_dropzone {
+    position: relative;
+    min-height: 250px;
+    width: 100%;
+    overflow-y: scroll;
+    border-radius: 5px;
+    box-shadow: 0 0 12px #141414;
+}
