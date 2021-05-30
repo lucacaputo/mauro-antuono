@@ -20,9 +20,19 @@
 }
 .picker_dropzone {
     position: relative;
-    min-height: 250px;
+    height: 250px;
+    max-height: 250px;
     width: 100%;
     overflow-y: scroll;
     border-radius: 5px;
     box-shadow: 0 0 12px #141414;
+}
+.file_entry {
+    position: relative;
+    z-index: 1;
+    padding: 10px 15px;
+    overflow: hidden;
+    width: 100%;
+    height: 50px;
+    border-bottom: 1px solid rgba(0,0,0,.2)
 }
