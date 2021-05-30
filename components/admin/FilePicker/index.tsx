@@ -34,7 +34,6 @@ const FilePicker: React.FC<FilePickerProps> = ({ allowedExtensions }) => {
         let files = fs.filter(f => allowedExtensions.includes(f.type));
         const names = content.map(n => n.name);
         files = files.filter(f => !names.includes(f.name));
-        reverseAnimation();
         setContent(prev => [...prev, ...files]);
     }
     const dragEnter = (e: React.DragEvent) => {
@@ -60,6 +59,7 @@ const FilePicker: React.FC<FilePickerProps> = ({ allowedExtensions }) => {
         e.stopPropagation();
         let files = [...e.dataTransfer.files];
         countRef.current = 0;
+        reverseAnimation();
         loadFiles(files);
     }
     return (
