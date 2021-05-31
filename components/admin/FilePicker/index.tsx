@@ -12,7 +12,6 @@ type FilePickerProps = {
 const FilePicker: React.FC<FilePickerProps> = ({ allowedExtensions, onUpload, title, subtitle }) => {
     const [content, setContent] = useState<File[]>([]);
     const countRef = useRef(0);
-    const dropzone = useRef<HTMLDivElement | null>(null);
     const dropzoneAnimationControls = useAnimation();
     const uploadButtonVariants: Variants = {
         initial: {
@@ -110,7 +109,6 @@ const FilePicker: React.FC<FilePickerProps> = ({ allowedExtensions, onUpload, ti
                 onDragLeave={dragLeave}
                 onDragOver={dragOver}
                 onDrop={drop}
-                ref={dropzone}
             >
                 <FileList files={
                     content.map(c => [
