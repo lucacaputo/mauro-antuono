@@ -85,8 +85,7 @@ const FileEntry: React.FC<FileEntryProps> = ({ name, onDelete }) => {
                         style={{ 
                             position: 'absolute', 
                             top: 0, 
-                            left: '50%',
-                            transform: 'translateX(-50%)', 
+                            left: 'calc(50% - 26px)',
                             zIndex: 2,
                             maxHeight: '100%',
                             display: 'block',

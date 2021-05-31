@@ -32,7 +32,7 @@ const lnks: LinkType[] = [
     },
     {
         text: 'Images',
-        to: '/admin/Images',
+        to: '/admin/images',
         icon: <AiFillPicture color="#eee" size="100%" />
     },
 ];

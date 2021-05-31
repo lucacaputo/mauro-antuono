@@ -1,17 +1,52 @@
-import { motion, useAnimation } from "framer-motion";
+import { motion, useAnimation, AnimatePresence, Variants } from "framer-motion";
 import React, { useState, useRef } from "react";
 import FileList from "./FileList";
 
 type FilePickerProps = {
     allowedExtensions: string[],
+    onUpload: (files: File[]) => void,
+    title: string,
+    subtitle?: string,
 };
 
-const FilePicker: React.FC<FilePickerProps> = ({ allowedExtensions }) => {
+const FilePicker: React.FC<FilePickerProps> = ({ allowedExtensions, onUpload, title, subtitle }) => {
     const [content, setContent] = useState<File[]>([]);
     const countRef = useRef(0);
     const dropzone = useRef<HTMLDivElement | null>(null);
 
     const dropzoneAnimationControls = useAnimation();
+    const uploadButtonVariants: Variants = {
+        initial: {
+            y: '100%',
+        },
+        animate: {
+            y: '0%',
+            transition: {
+                type: 'spring',
+                damping: 17,
+                stiffness: 400,
+                when: 'beforeChildren'
+            }
+        },
+        exit: {
+            y: '100%',
+            opacity: 0,
+            transition: {
+                when: 'afterChildren',
+            }
+        }
+    }
+    const uploadSpanVariants: Variants = {
+        initial: {
+            opacity: 0,
+        },
+        animate: {
+            opacity: 1,
+        },
+        exit: {
+            opacity: 0,
+        }
+    }
     const playAnimation = () => dropzoneAnimationControls.start({
         z: 15,
         boxShadow: '0 0 25px #141414',
@@ -62,10 +97,15 @@ const FilePicker: React.FC<FilePickerProps> = ({ allowedExtensions }) => {
         reverseAnimation();
         loadFiles(files);
     }
+    const upload = () => onUpload(content);
+    console.log(content);
     return (
         <>
-            <h2 className="text-center pt-4">Carica i PDF</h2>
-            <h4 className="text-center mb-5">Oppure trascinali nello scatolo ostia</h4>
+            <h2 className="text-center pt-4">{title}</h2>
+            {
+                subtitle && 
+                <h4 className="text-center mb-5">{subtitle}</h4>
+            }
             <motion.div 
                 className="picker_dropzone"
                 animate={dropzoneAnimationControls}
@@ -88,10 +128,32 @@ const FilePicker: React.FC<FilePickerProps> = ({ allowedExtensions }) => {
                 name="FilePicker" 
                 id="FilePicker" 
                 className="d-none" 
-                accept="application/pdf"
+                accept={allowedExtensions.join(',')}
                 multiple
                 onChange={e => loadFiles([...e.currentTarget.files])}
             />
+            <div className="overflow-hidden py-2 text-center mt-3">
+                <AnimatePresence>
+                    {
+                        content.length > 0 &&
+                        <motion.button
+                            className="btn btn-lg btn-outline-success"
+                            type="button"
+                            onClick={upload}
+                            variants={uploadButtonVariants}
+                            initial="initial"
+                            animate="animate"
+                            exit="exit"
+                        >
+                            <motion.span
+                                variants={uploadSpanVariants}
+                            >
+                                Carica
+                            </motion.span>
+                        </motion.button>
+                    }
+                </AnimatePresence>
+            </div>
         </>
     );
 }
