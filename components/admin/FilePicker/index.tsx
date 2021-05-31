@@ -13,7 +13,6 @@ const FilePicker: React.FC<FilePickerProps> = ({ allowedExtensions, onUpload, ti
     const [content, setContent] = useState<File[]>([]);
     const countRef = useRef(0);
     const dropzone = useRef<HTMLDivElement | null>(null);
-
     const dropzoneAnimationControls = useAnimation();
     const uploadButtonVariants: Variants = {
         initial: {
@@ -85,7 +84,6 @@ const FilePicker: React.FC<FilePickerProps> = ({ allowedExtensions, onUpload, ti
         e.preventDefault();
         e.stopPropagation();
         countRef.current--;
-        console.log(countRef.current)
         if (countRef.current === 0) 
             reverseAnimation();
     }
@@ -98,7 +96,6 @@ const FilePicker: React.FC<FilePickerProps> = ({ allowedExtensions, onUpload, ti
         loadFiles(files);
     }
     const upload = () => onUpload(content);
-    console.log(content);
     return (
         <>
             <h2 className="text-center pt-4">{title}</h2>
