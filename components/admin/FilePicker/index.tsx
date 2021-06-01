@@ -95,6 +95,7 @@ const FilePicker: React.FC<FilePickerProps> = ({ allowedExtensions, onUpload, ti
         loadFiles(files);
     }
     const upload = () => onUpload(content);
+    const clean = () => setContent([]);
     return (
         <>
             <h2 className="text-center pt-4">{title}</h2>
@@ -117,7 +118,10 @@ const FilePicker: React.FC<FilePickerProps> = ({ allowedExtensions, onUpload, ti
                     ])
                 }  />
             </motion.div>
-            <label htmlFor="FilePicker" className="mt-3 btn btn-primary btn-lg">Scegli</label>
+            <div className="d-flex w-100 justify-content-between align-items center mt-3">
+                <label htmlFor="FilePicker" className="btn btn-primary btn-lg">Scegli</label>
+                <label className="btn btn-lg btn-danger" onClick={clean}>Pulisci</label>
+            </div>
             <input 
                 type="file" 
                 name="FilePicker" 
