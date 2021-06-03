@@ -1,6 +1,7 @@
 import FilePicker from "../../components/admin/FilePicker";
 import { NextPage } from 'next';
 import { API_BASE } from '../../helpers/index';
+import FileChooser from "../../components/admin/FileChooser";
 
 const Images: NextPage = () => {
     const upload = (files: File[]) => {
@@ -19,6 +20,7 @@ const Images: NextPage = () => {
     }
     return (
         <>
+            <FileChooser selectedAction={f => null} staticFetchPath='/projects/images' />
             <div className="container mainContainer" style={{ perspective: 200 }}>
                 <FilePicker 
                     onUpload={upload} 
