@@ -4,7 +4,7 @@ import FileList from "./FileList";
 
 type FilePickerProps = {
     allowedExtensions: string[],
-    onUpload: (files: File[]) => void,
+    onUpload: (files: File[]) => Promise<void>,
     title: string,
     subtitle?: string,
 };
@@ -94,8 +94,8 @@ const FilePicker: React.FC<FilePickerProps> = ({ allowedExtensions, onUpload, ti
         reverseAnimation();
         loadFiles(files);
     }
-    const upload = () => onUpload(content);
     const clean = () => setContent([]);
+    const upload = () => onUpload(content).then(clean);
     return (
         <>
             <h2 className="text-center pt-4">{title}</h2>
@@ -118,26 +118,13 @@ const FilePicker: React.FC<FilePickerProps> = ({ allowedExtensions, onUpload, ti
                     ])
                 }  />
             </motion.div>
-            <div className="d-flex w-100 justify-content-between align-items center mt-3">
+            <div className="d-flex w-100 justify-content-between align-items-center mt-3 overflow-hidden">
                 <label htmlFor="FilePicker" className="btn btn-primary btn-lg">Scegli</label>
-                <label className="btn btn-lg btn-danger" onClick={clean}>Pulisci</label>
-            </div>
-            <input 
-                type="file" 
-                name="FilePicker" 
-                id="FilePicker" 
-                className="d-none" 
-                accept={allowedExtensions.join(',')}
-                multiple
-                onChange={e => loadFiles([...e.currentTarget.files])}
-            />
-            <div className="overflow-hidden py-2 text-center mt-3">
                 <AnimatePresence>
                     {
                         content.length > 0 &&
-                        <motion.button
+                        <motion.label
                             className="btn btn-lg btn-outline-success"
-                            type="button"
                             onClick={upload}
                             variants={uploadButtonVariants}
                             initial="initial"
@@ -149,10 +136,20 @@ const FilePicker: React.FC<FilePickerProps> = ({ allowedExtensions, onUpload, ti
                             >
                                 Carica
                             </motion.span>
-                        </motion.button>
+                        </motion.label>
                     }
                 </AnimatePresence>
+                <label className="btn btn-lg btn-danger" onClick={clean}>Pulisci</label>
             </div>
+            <input 
+                type="file" 
+                name="FilePicker" 
+                id="FilePicker" 
+                className="d-none" 
+                accept={allowedExtensions.join(',')}
+                multiple
+                onChange={e => loadFiles([...e.currentTarget.files])}
+            />
         </>
     );
 }

@@ -36,3 +36,34 @@
     height: 50px;
     border-bottom: 1px solid rgba(0,0,0,.2)
 }
+.fileChooserWrapper {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.file_chooser_entry {
+    position: relative;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.circular_selector {
+    position: absolute;
+    left: 8%;
+    top: 8%;
+    width: 20px;
+    height: 20px;
+    border-radius: 100%;
+    border: 1px solid rgba(0,0,0,.5);
+    background-color: rgba(255,255,255,.5);
+    cursor: pointer;
+}
+.selected_circle {
+    width: 70%;
+    height: 70%;
+    border-radius: 100%;
+    position: relative;
+    top: 50%;
+    left: 50%;
+    background-color: var(--primary);
+}
