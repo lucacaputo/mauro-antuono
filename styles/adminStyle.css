@@ -40,6 +40,8 @@
     display: flex;
     align-items: center;
     flex-wrap: wrap;
+    height: 255px;
+    overflow-y: scroll;
 }
 .file_chooser_entry {
     position: relative;

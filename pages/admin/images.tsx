@@ -45,6 +45,30 @@ const Images: NextPage = () => {
         .catch(err => console.log(err));
         return Promise.resolve();
     }
+    const del = async (ids: string[]) => {
+        const res = await fetch(`${API_BASE}/projects/images`, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${window.localStorage.getItem('token')}`,
+                'Content-type': 'Application/json',
+            },
+            body: JSON.stringify({ ids }),
+        })
+            .then(r => r.json())
+            .catch(err => {
+                toast(err, {
+                    position: "bottom-center",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
+            });
+        console.log(res);
+        mutate();
+    }
     const { data, error, mutate } = useSWR<ImagesResponse, any>(
         `${API_BASE}/projects/images`, 
         (input: RequestInfo, init: RequestInit) => fetch(input, init).then(r => r.json())
@@ -71,7 +95,7 @@ const Images: NextPage = () => {
                     subtitle='Oppure trascinale nello scatolo ostia'
                 />
                 <div className="mt-3">
-                    <FileChooser actionText="Elimina" files={data?.images ?? []} withSelectedAction={() => null} />
+                    <FileChooser actionText="Elimina" files={data?.images ?? []} withSelectedAction={del} />
                 </div>
             </div>
         </>
