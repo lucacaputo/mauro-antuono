@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import FileChooserEntry from './FileChooserEntry';
 import { AnimatePresence, motion, Variants } from "framer-motion";
 
@@ -7,16 +7,39 @@ export type BaseFile = {
     _id: string,
 }
 
-interface FileChooserProps<T extends BaseFile> {
+export type FileChooserBreakpoint = {
+    breakpoint: number,
+    perRow: number,
+}
+
+export interface FileChooserProps<T extends BaseFile> {
     files: T[],
     withSelectedAction: (selection: string[]) => void,
     actionText: string,
+    responsive?: FileChooserBreakpoint[],
 }
 
 function FileChooser<T extends BaseFile>(props: FileChooserProps<T>): React.ReactElement<FileChooserProps<T>> {
-    const { files, withSelectedAction, actionText } = props;
+    const { files, withSelectedAction, actionText, responsive } = props;
+    const [perRow, setPerRow] = useState<number | undefined>(undefined);
     const [selectionMode, setSelectionMode] = useState(false);
     const [selectedFiles, setSelectedFiles] = useState<string[]>([]);
+    useEffect(() => {
+        const resp = () => {
+            if (responsive && responsive.length > 0) {
+                const w = window.innerWidth;
+                responsive.sort((a, b) => {
+                    if (Math.abs(a.breakpoint - w) > Math.abs(b.breakpoint - w)) {
+                        return 1;
+                    } else return -1;
+                });
+                setPerRow(responsive[0].perRow);
+            }
+        }
+        resp();
+        window.addEventListener('resize', resp);
+        return () => window.removeEventListener('resize', resp);
+    }, []);
     const toggleSelection = () => setSelectionMode(s => !s);
     const delVariants: Variants = {
         initial: {
@@ -55,6 +78,7 @@ function FileChooser<T extends BaseFile>(props: FileChooserProps<T>): React.Reac
                             selectionMode={selectionMode}
                             initialSelect={selectedFiles.includes(f._id)}
                             onClick={toggleSelection}
+                            perRow={perRow}
                         />
                     ))
                 }

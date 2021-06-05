@@ -22,7 +22,6 @@ const FileChooserEntry: React.FC<FileChooserEntryProps> = ({
         initialSelect,
         perRow=10 
     }) => {
-    const [present, setPresent] = useState(true);
     const [dims, setDims] = useState('0');
     const [selected, setSelected] = useState(initialSelect);
     let timeout: ReturnType<typeof setTimeout> | null = null;
@@ -76,11 +75,10 @@ const FileChooserEntry: React.FC<FileChooserEntryProps> = ({
             clearTimeout(timeout);
             window.removeEventListener('resize', calcDims);
         }
-    }, [wrapper.current, selected]);
+    }, [wrapper.current, selected, perRow]);
     return (
         <AnimatePresence>
             {
-                present &&
                 <motion.div
                     className="file_chooser_entry m-2"
                     style={{ width: dims, height: dims, backgroundImage: `url(${API_BASE}/${url})` }}

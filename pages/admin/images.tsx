@@ -95,7 +95,21 @@ const Images: NextPage = () => {
                     subtitle='Oppure trascinale nello scatolo ostia'
                 />
                 <div className="mt-3">
-                    <FileChooser actionText="Elimina" files={data?.images ?? []} withSelectedAction={del} />
+                    <FileChooser 
+                        actionText="Elimina" 
+                        files={data?.images ?? []} 
+                        withSelectedAction={del} 
+                        responsive={[
+                            {
+                                breakpoint: 767,
+                                perRow: 5,
+                            },
+                            {
+                                breakpoint: 991,
+                                perRow: 10,
+                            }
+                        ]}
+                    />
                 </div>
             </div>
         </>
