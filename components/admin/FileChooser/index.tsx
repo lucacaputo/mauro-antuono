@@ -24,21 +24,28 @@ function FileChooser<T extends BaseFile>(props: FileChooserProps<T>): React.Reac
     const [perRow, setPerRow] = useState<number | undefined>(undefined);
     const [selectionMode, setSelectionMode] = useState(false);
     const [selectedFiles, setSelectedFiles] = useState<string[]>([]);
+    let debounce: ReturnType<typeof setTimeout> | null = null;
     useEffect(() => {
         const resp = () => {
-            if (responsive && responsive.length > 0) {
-                const w = window.innerWidth;
-                responsive.sort((a, b) => {
-                    if (Math.abs(a.breakpoint - w) > Math.abs(b.breakpoint - w)) {
-                        return 1;
-                    } else return -1;
-                });
-                setPerRow(responsive[0].perRow);
-            }
+            clearTimeout(debounce);
+            debounce = setTimeout(() => {
+                if (responsive && responsive.length > 0) {
+                    const w = window.innerWidth;
+                    responsive.sort((a, b) => {
+                        if (Math.abs(a.breakpoint - w) > Math.abs(b.breakpoint - w)) {
+                            return 1;
+                        } else return -1;
+                    });
+                    setPerRow(responsive[0].perRow);
+                }
+            }, 200);
         }
         resp();
         window.addEventListener('resize', resp);
-        return () => window.removeEventListener('resize', resp);
+        return () => {
+            window.removeEventListener('resize', resp);
+            clearTimeout(debounce);
+        }
     }, []);
     const toggleSelection = () => setSelectionMode(s => !s);
     const delVariants: Variants = {
@@ -64,24 +71,24 @@ function FileChooser<T extends BaseFile>(props: FileChooserProps<T>): React.Reac
     }
     return (
         <>
-            <div
-                className="fileChooserWrapper p-2"
-            >
-                {
-                    files &&
-                    files.map(f => (
-                        <FileChooserEntry 
-                            onSelect={f => setSelectedFiles(p => [...p, f])} 
-                            onRemove={f => setSelectedFiles(p => p.filter(el => el !== f))}
-                            key={f._id} 
-                            {...f} 
-                            selectionMode={selectionMode}
-                            initialSelect={selectedFiles.includes(f._id)}
-                            onClick={toggleSelection}
-                            perRow={perRow}
-                        />
-                    ))
-                }
+            <div className="fileChooserWrapper p-2">
+                <div className="file_ch">
+                    {
+                        files &&
+                        files.map(f => (
+                            <FileChooserEntry 
+                                onSelect={f => setSelectedFiles(p => [...p, f])} 
+                                onRemove={f => setSelectedFiles(p => p.filter(el => el !== f))}
+                                key={f._id} 
+                                {...f} 
+                                selectionMode={selectionMode}
+                                initialSelect={selectedFiles.includes(f._id)}
+                                onClick={toggleSelection}
+                                perRow={perRow}
+                            />
+                        ))
+                    }
+                </div>
             </div>
             <div className="overflow-hidden d-flex w-100 justify-content-center align-items-center py-3">
                 <AnimatePresence>

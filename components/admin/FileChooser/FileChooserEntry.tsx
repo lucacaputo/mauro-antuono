@@ -80,7 +80,7 @@ const FileChooserEntry: React.FC<FileChooserEntryProps> = ({
         <AnimatePresence>
             {
                 <motion.div
-                    className="file_chooser_entry m-2"
+                    className="file_chooser_entry mx-2  mt-2 mb-auto"
                     style={{ width: dims, height: dims, backgroundImage: `url(${API_BASE}/${url})` }}
                     onClick={onClick}
                     ref={wrapper}
