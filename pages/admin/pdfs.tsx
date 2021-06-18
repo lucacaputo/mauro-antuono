@@ -4,6 +4,8 @@ import { API_BASE } from '../../helpers/index';
 import useSWR from 'swr';
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import FileChooser from "../../components/admin/FileChooser";
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.min.css';
 
 export type PDFResponse = {
     ok: boolean,
@@ -34,12 +36,60 @@ const Pdfs: NextPage = () => {
             if (data.ok) {
                 mutate();
             } else {
-                console.log(data);
+                data.messages.forEach(m => toast.error(m, {
+                        position: "bottom-center",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                    })
+                )
             }
         })
         .catch(err => {
             console.log('error', err);
         })
+    }
+    const del = async (selection: string[]) => {
+        await fetch(`${API_BASE}/projects/pdfs`, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${window.localStorage.getItem('token')}`,
+                'Content-type': 'Application/json',
+            },
+            body: JSON.stringify({
+                ids: selection,
+            })
+        })
+        .then(res => res.json())
+        .then(res => {
+            if (res.ok) {
+                mutate();
+            } else {
+                toast.error(res.error, {
+                    position: "bottom-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
+            }
+        })
+        .catch(err => {
+            toast.error(err, {
+                position: "bottom-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+        });
     }
     const { data, error, mutate, isValidating } = useSWR<PDFResponse, any>(`${API_BASE}/projects/pdfs`, (inp: RequestInfo, init: RequestInit) => fetch(inp, init).then(r => r.json()));
     const loading = (!data && !error) || isValidating;
@@ -63,12 +113,23 @@ const Pdfs: NextPage = () => {
                         !loading &&
                         <FileChooser 
                             files={data.pdfs!.map(e => ({ ...e, url: e.thumbnail }))}
-                            withSelectedAction={null}
+                            withSelectedAction={del}
                             actionText="fottiti"
                         />
                     }
                 </div>
             </div>
+            <ToastContainer
+                position="bottom-center"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+            />
         </>
     );
 }
