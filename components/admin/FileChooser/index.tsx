@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, CSSProperties } from "react";
 import FileChooserEntry from './FileChooserEntry';
 import { AnimatePresence, motion, Variants } from "framer-motion";
 
@@ -17,10 +17,14 @@ export interface FileChooserProps<T extends BaseFile> {
     withSelectedAction: (selection: string[]) => void,
     actionText: string,
     responsive?: FileChooserBreakpoint[],
+    style?: CSSProperties,
+    onSelect?: (id: string) => void,
+    onRemove?: (id: string) => void,
+    disableActionButton?: boolean,
 }
 
 function FileChooser<T extends BaseFile>(props: FileChooserProps<T>): React.ReactElement<FileChooserProps<T>> {
-    const { files, withSelectedAction, actionText, responsive } = props;
+    const { files, withSelectedAction, actionText, responsive, style, onSelect, onRemove, disableActionButton } = props;
     const [perRow, setPerRow] = useState<number | undefined>(undefined);
     const [selectionMode, setSelectionMode] = useState(false);
     const [selectedFiles, setSelectedFiles] = useState<string[]>([]);
@@ -69,16 +73,24 @@ function FileChooser<T extends BaseFile>(props: FileChooserProps<T>): React.Reac
         withSelectedAction(selectedFiles);
         setSelectedFiles([]);
     }
+    const select = (id: string) => {
+        setSelectedFiles(p => [...p, id]);
+        onSelect && onSelect(id);
+    }
+    const remove = (id: string) => {
+        setSelectedFiles(p => p.filter(el => el !== id));
+        onRemove && onRemove(id);
+    }
     return (
         <>
-            <div className="fileChooserWrapper p-2">
+            <div className="fileChooserWrapper p-2" style={style}>
                 <div className="file_ch">
                     {
                         files &&
                         files.map(f => (
                             <FileChooserEntry 
-                                onSelect={f => setSelectedFiles(p => [...p, f])} 
-                                onRemove={f => setSelectedFiles(p => p.filter(el => el !== f))}
+                                onSelect={select} 
+                                onRemove={remove}
                                 key={f._id} 
                                 {...f} 
                                 selectionMode={selectionMode}
@@ -91,22 +103,26 @@ function FileChooser<T extends BaseFile>(props: FileChooserProps<T>): React.Reac
                 </div>
             </div>
             <div className="overflow-hidden d-flex w-100 justify-content-center align-items-center py-3">
-                <AnimatePresence>
-                    {
-                        selectionMode && selectedFiles.length > 0 &&
-                        <motion.button
-                            type="button"
-                            className="btn btn-lg btn-outline-danger"
-                            onClick={action}
-                            variants={delVariants}
-                            initial="initial"
-                            animate="animate"
-                            exit="exit"
-                        >
-                            {actionText}
-                        </motion.button>
-                    }
-                </AnimatePresence>
+                {
+                    disableActionButton !== undefined && disableActionButton ?
+                    null :
+                    <AnimatePresence>
+                        {
+                            selectionMode && selectedFiles.length > 0 &&
+                            <motion.button
+                                type="button"
+                                className="btn btn-lg btn-outline-danger"
+                                onClick={action}
+                                variants={delVariants}
+                                initial="initial"
+                                animate="animate"
+                                exit="exit"
+                            >
+                                {actionText}
+                            </motion.button>
+                        }
+                    </AnimatePresence>
+                }
             </div>
         </>
     );

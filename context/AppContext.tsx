@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
+import { API_BASE } from '../helpers/index';
 
 type SetDataFunction = (usr: {username?: string, isLoggedIn?: boolean, token?: string}) => void;
 type AppContextType = {
@@ -25,8 +26,9 @@ const AppContext: React.FC = ({ children }) => {
     useEffect(() => {
         try {
             const user = window.localStorage.getItem('username');
+            const isLoggedIn = window.localStorage?.getItem('token') !== undefined;
             if (user) {
-                setData({username: user, isLoggedIn: true});
+                isLoggedIn && setData({username: user, isLoggedIn });
             }
         } catch (err) {
             //user data not set

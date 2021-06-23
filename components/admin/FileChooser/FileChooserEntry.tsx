@@ -2,6 +2,7 @@ import { motion, AnimatePresence, Variants } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
 import { BaseFile } from "./index";
 import { API_BASE } from '../../../helpers/index';
+import { AiFillFileImage } from "react-icons/ai";
 
 type FileChooserEntryProps = {
     selectionMode: boolean,
@@ -24,6 +25,7 @@ const FileChooserEntry: React.FC<FileChooserEntryProps> = ({
     }) => {
     const [dims, setDims] = useState('0');
     const [selected, setSelected] = useState(initialSelect);
+    const [loaded, setLoaded] = useState(false);
     let timeout: ReturnType<typeof setTimeout> | null = null;
     const wrapper = useRef<HTMLDivElement | null>(null);
     const selectorVariants: Variants = {
@@ -76,42 +78,44 @@ const FileChooserEntry: React.FC<FileChooserEntryProps> = ({
             window.removeEventListener('resize', calcDims);
         }
     }, [wrapper.current, selected, perRow]);
+    const bgImage = `url(${API_BASE}/${encodeURI(url)}`;
     return (
-        <AnimatePresence>
+        <motion.div
+            className="file_chooser_entry mx-2  mt-2 mb-auto"
+            style={{ width: dims, height: dims, backgroundImage: loaded ? bgImage : 'none', }}
+            onClick={onClick}
+            ref={wrapper}
+            onLayoutAnimationComplete={() => setLoaded(true)}
+            layout
+        >
             {
-                <motion.div
-                    className="file_chooser_entry mx-2  mt-2 mb-auto"
-                    style={{ width: dims, height: dims, backgroundImage: `url(${API_BASE}/${encodeURI(url)}` }}
-                    onClick={onClick}
-                    ref={wrapper}
-                    layout
-                >
+                <AnimatePresence exitBeforeEnter>
                     {
-                        <AnimatePresence exitBeforeEnter>
-                            {
-                                selectionMode &&
-                                <motion.div
-                                    className="circular_selector"
-                                    tabIndex={-1}
-                                    variants={selectorVariants}
-                                    initial="initial"
-                                    animate="animate"
-                                    exit="exit"
-                                    onClick={sel}
-                                >
-                                    <motion.div 
-                                        className="selected_circle"
-                                        variants={selectorCircleVariants}
-                                        initial="initial"
-                                        animate="animate"
-                                    />
-                                </motion.div>
-                            }
-                        </AnimatePresence>
+                        selectionMode &&
+                        <motion.div
+                            className="circular_selector"
+                            tabIndex={-1}
+                            variants={selectorVariants}
+                            initial="initial"
+                            animate="animate"
+                            exit="exit"
+                            onClick={sel}
+                        >
+                            <motion.div 
+                                className="selected_circle"
+                                variants={selectorCircleVariants}
+                                initial="initial"
+                                animate="animate"
+                            />
+                        </motion.div>
                     }
-                </motion.div>
+                </AnimatePresence>
             }
-        </AnimatePresence>
+            {
+                !loaded &&
+                <AiFillFileImage size={40} color="#141414" />
+            }
+        </motion.div>
     );
 }
 

@@ -3,7 +3,7 @@ import { AppProps } from "next/app";
 import { AnimatePresence } from "framer-motion";
 import Navbar from '../components/Navbar';
 import { useRef } from 'react';
-import { clamp } from "../helpers";
+import { clamp, useAuth } from "../helpers";
 import SideNav from "../components/SideNav";
 import InfoContainer from '../components/InfoContainer';
 import ScrollArrow from '../components/ScrollArrow';
@@ -88,6 +88,15 @@ const App: React.FC<AppProps> = ({ Component, pageProps, router }) => {
 		if (router.route === '/') return { clampTo: window.innerWidth / 3, clampFrom: 0, };
 		if (router.route === '/progetti') return { clampTo: window.innerWidth, clampFrom: (window.innerWidth / 3) * 2, };
 		return { clampTo: (window.innerWidth / 3) * 2, clampFrom: window.innerWidth / 3, };
+	}
+	const loginData = useAuth();
+	if (!loginData.loading) {
+		if (router.route.indexOf('login') < 0) {
+			if (router.route.indexOf('admin') >= 0 && loginData.error !== undefined) {
+				router.push("/admin/login");
+				return null;
+			}
+		}
 	}
 	return !/\/admin/gm.test(router.route) ? (
 		<div 
