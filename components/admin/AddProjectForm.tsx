@@ -8,7 +8,7 @@ import FileChooser from './FileChooser';
 type AddProjectFormProps = {
     onSubmit: (state: FormType) => void,
 } & object;
-type FormType = {
+export type FormType = {
     titolo: string,
     luogo: string,
     scala: number,
@@ -49,12 +49,12 @@ const AddProjectForm: React.FC<AddProjectFormProps> = ({ onSubmit }) => {
     const pdfLoading = (!pdfData && !pdfError) || pdfValidating;
     const contVars: Variants = {
         initial: { y: "-70%", opacity: 0, x: "-50%" },
-        animate: { y: "-50%", opacity: 1, x: "-50%", transition: { when: "beforeChildren" } },
+        animate: { y: "-50%", opacity: 1, x: "-50%" },
         exit: { y: "-30%", opacity: 0, x: "-50%", transition: { when: "afterChildren" } },
     }
     const buttonVars: Variants = {
         initial: { y: 60, opacity: 0, rotate: "-360deg" },
-        animate: { y: 0, opacity: 1, rotate: "0deg" },
+        animate: { y: 0, opacity: 1, rotate: "0deg", transition: { delay: .2 } },
         exit: { y: 60, opacity: 0, rotate: "-360deg" },
     }
     const submit = (e: React.FormEvent) => {
