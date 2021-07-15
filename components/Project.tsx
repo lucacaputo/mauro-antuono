@@ -1,6 +1,7 @@
 import { motion, Variants } from 'framer-motion';
 import { Project as ProjectType } from '../pages/progetti';
 import styles from "../styles/project.module.css";
+import Tooltip from '@material-ui/core/Tooltip';
 
 type ProjectProps = {
     project: ProjectType,
@@ -8,29 +9,15 @@ type ProjectProps = {
 
 const Project: React.FC<ProjectProps> = ({ project }) => {
     const { image, title } = project;
-    const projectVar: Variants = {
-        initial: {
-            scale: 1
-        },
-        hover: {
-            scale: 1.3
-        }
-    }
     return (
-        <motion.div
-            initial="initial"
-            whileHover="hover"
-            variants={projectVar}
-            className={styles.project}
-            layout
-        >
-            <img src={image} alt={title}/>
-            <span 
-                className={styles.tooltip}
+        <Tooltip title={title} placement="top" arrow>
+            <motion.div
+                className={styles.project}
+                layout
             >
-                { title.toUpperCase() }
-            </span>
-        </motion.div>
+                <img src={image} alt={title}/>
+            </motion.div>
+        </Tooltip>
     );
 }
 

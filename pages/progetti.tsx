@@ -92,7 +92,6 @@ const Progetti: NextPage = () => {
 
     return (
         <motion.div className={styles.progetti}>
-
             <Head>
                 <title>Mario Longobardi | Progetti</title>
             </Head>
