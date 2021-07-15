@@ -1,4 +1,4 @@
-import { motion, Variants } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Project as ProjectType } from '../pages/progetti';
 import styles from "../styles/project.module.css";
 import Tooltip from '@material-ui/core/Tooltip';
