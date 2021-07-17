@@ -33,4 +33,7 @@
     .navbar h1 {
         font-size: 18px;
     }
+    .navLinks {
+        display: none;
+    }
 }

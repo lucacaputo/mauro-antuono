@@ -6,3 +6,8 @@
     display: flex;
     overflow-x: auto;
 }
+@media screen and (max-width: 767px) {
+    .infocont {
+        display: none;
+    }
+}

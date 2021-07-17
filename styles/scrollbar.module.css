@@ -6,5 +6,9 @@
     height: 4px;
     background: #141414;
     transition: width .15s ease;
-    will-change: width;
+}
+@media screen and (max-width: 767px) {
+    .scrollBar {
+        display: none;
+    }
 }
