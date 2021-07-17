@@ -16,6 +16,7 @@ import { useEffect, useState } from 'react';
 import Head from "next/head";
 import * as ga from '../lib/ga'
 import "../styles/adminStyle.css";
+import MobNavbar from "../components/mobile/Navbar/Navbar";
 
 type Direction = "up" | "down";
 
@@ -105,6 +106,7 @@ const App: React.FC<AppProps> = ({ Component, pageProps, router }) => {
 		>
 			<ScrollBar {...getClamp()} />
 			<Navbar isOnTop={router.route !== "/"} linksVisible={router.route === "/progetti"} />
+			<MobNavbar />
 			<div id="mainContainer">
 				<AnimatePresence exitBeforeEnter>
 					<Component {...pageProps} key={router.route} />

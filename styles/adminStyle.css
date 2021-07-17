@@ -38,7 +38,7 @@
 }
 .fileChooserWrapper {
     height: 255px;
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 .file_ch {
     display: flex;
