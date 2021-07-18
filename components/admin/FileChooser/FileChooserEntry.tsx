@@ -78,7 +78,7 @@ const FileChooserEntry: React.FC<FileChooserEntryProps> = ({
             window.removeEventListener('resize', calcDims);
         }
     }, [wrapper.current, selected, perRow]);
-    const bgImage = `url(${API_BASE}/${encodeURI(url)}`;
+    const bgImage = `url(${API_BASE}/${encodeURI(url.replace(/\\/gm, '/'))}`;
     return (
         <motion.div
             className="file_chooser_entry mx-2  mt-2 mb-auto"

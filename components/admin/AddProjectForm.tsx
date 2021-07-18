@@ -1,4 +1,4 @@
-import { API_BASE } from '../../helpers/index';
+import { API_BASE, toDate } from '../../helpers/index';
 import useSWR from "swr";
 import { AiOutlinePlus, AiFillCloseCircle } from "react-icons/ai";
 import { motion, AnimatePresence, Variants } from "framer-motion";
@@ -31,12 +31,6 @@ const AddProjectForm: React.FC<AddProjectFormProps> = ({ onSubmit }) => {
         ...s,
         [(e.target as HTMLInputElement).name]: (e.target as HTMLInputElement).value,
     }));
-    const toDate = (d: Date) => {
-        const year = d.getFullYear();
-        const month = d.getMonth().toString().padStart(2, '0');
-        const day = d.getDate().toString().padStart(2, '0');
-        return `${year}-${month}-${day}`;
-    }
     const changeDate = (e: React.ChangeEvent) => setFormState(s => ({
         ...s,
         data: new Date((e.target as HTMLInputElement).value),
