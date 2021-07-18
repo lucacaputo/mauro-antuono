@@ -8,6 +8,8 @@
 }
 @media screen and (max-width: 767px) {
     .infocont {
-        display: none;
+        margin-left: 0;
+        padding: 0;
+        border: none;
     }
 }

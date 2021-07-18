@@ -32,7 +32,7 @@ const Dropdown: React.FC<DropdownProps> = ({ children, title }) => {
     }
     return (
         <div className={styles.dropdown}>
-            <div className={styles.dropdownTitle}>
+            <div className={styles.dropdownTitle} onClick={toggle}>
                 <span> {title} </span> 
                 <motion.span
                     variants={togglerVariants}
@@ -40,7 +40,7 @@ const Dropdown: React.FC<DropdownProps> = ({ children, title }) => {
                     animate="animate"
                     style={{ display: 'flex' }}
                 >
-                    <AiOutlineDown onClick={toggle} size={20} style={{ color: 'inherit' }} />
+                    <AiOutlineDown size={20} style={{ color: 'inherit' }} />
                 </motion.span>
             </div>
             <motion.div 
