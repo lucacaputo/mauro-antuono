@@ -66,7 +66,6 @@ const Progetto: NextPage<ProjectProps> = ({ project }) => {
     useEffect(() => {
         setParent(document.querySelector('#projectIdContainer') as HTMLDivElement);
     }, [parent]);
-    console.log(project)
     return parent !== null
         ? createPortal(
             <motion.div
