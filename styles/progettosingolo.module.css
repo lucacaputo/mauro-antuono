@@ -1,0 +1,52 @@
+.projectWrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 12;
+    background-color: rgba(0,0,0,.6);
+    overflow-y: auto;
+}
+.project {
+    transform-origin: center;
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 70%;
+    margin: 5vh auto 0 auto;
+    min-height: 90vh;
+    overflow-y: auto;
+    background-color: #fff;
+    border-radius: 6px;
+    box-shadow: 0 0 15px #141414;
+}
+.projectPdfs {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+}
+.pdf {
+    width: 200px;
+    position: relative;
+    margin: 0 15px 15px 0;
+}
+.pdf img {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin-bottom: 10px;
+}
+.btn {
+    margin-block-end: 0;
+    margin-block-start: 0;
+    border: 1px solid #141414;
+    padding: 5px 20px;
+    background-color: #fff;
+    font-size: 16px;
+    line-height: 16px;
+}
+.projectBody {
+    margin-top: 20px;
+    padding: 0 15px;
+}

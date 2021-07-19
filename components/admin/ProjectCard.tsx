@@ -4,7 +4,7 @@ import { useState } from "react";
 import React from "react";
 import FileChooser from "./FileChooser";
 
-type ProjectCardProps = {
+export type ProjectCardProps = {
     data: string,
     img_details: {
         md5: string,

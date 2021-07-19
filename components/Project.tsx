@@ -2,20 +2,27 @@ import { motion } from 'framer-motion';
 import { Project as ProjectType } from '../pages/progetti';
 import styles from "../styles/project.module.css";
 import Tooltip from '@material-ui/core/Tooltip';
+import { API_BASE } from '../helpers';
+import Link from "next/link";
 
 type ProjectProps = {
     project: ProjectType,
 }
 
 const Project: React.FC<ProjectProps> = ({ project }) => {
-    const { image, title } = project;
+    const { titolo, thumbnail, _id } = project;
+    const thumbUrl = project.img_details.find(d => d._id === thumbnail).url || null;
     return (
-        <Tooltip title={title} placement="top" arrow>
+        <Tooltip title={titolo} placement="top" arrow>
             <motion.div
                 className={styles.project}
                 layout
             >
-                <img src={image} alt={title}/>
+                <Link href={`progetti/${_id}`}>
+                    <a>
+                        <img src={`${API_BASE}/${thumbUrl.replace(/\\/gm, '/')}`} alt={`preview ${titolo}`}/>
+                    </a>
+                </Link>
             </motion.div>
         </Tooltip>
     );

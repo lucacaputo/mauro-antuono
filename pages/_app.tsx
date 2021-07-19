@@ -1,6 +1,6 @@
 import "../styles/globals.css";
 import { AppProps } from "next/app";
-import { AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import Navbar from '../components/Navbar';
 import { useRef } from 'react';
 import { clamp, useAuth } from "../helpers";
@@ -43,7 +43,7 @@ const getNextRoute = (route: string, direction: Direction) => {
 		if (route === "/") return "/esperienze";
 		else return "/progetti";
 	} else {
-		if (route === "/progetti") return "/esperienze";
+		if (/\/progetti/gm.test(route)) return "/esperienze";
 		else return "/";
 	}
 }
@@ -57,19 +57,21 @@ const App: React.FC<AppProps> = ({ Component, pageProps, router }) => {
 
 	const onWheel = (e: React.WheelEvent) => {
 		clearTimeout(throttle);
-		const { deltaY } = e;
-		const direction: Direction = deltaY < 0 ? "up" : "down";
-		scrollRef.current.pixels = clamp(scrollRef.current.pixels + deltaY, NavigateThreshold, 0);
-		throttle = setTimeout(() => {
-			if (scrollRef.current.pixels === NavigateThreshold || scrollRef.current.pixels === 0) {
-				const nextRoute = getNextRoute(router.route, direction);
-				if (router.route !== nextRoute) {
-					scrollRef.current.page = nextRoute;
-					scrollRef.current.pixels = direction === "up" ? NavigateThreshold : 0;
-					router.push(scrollRef.current.page);
+		if (!/\/progetti\/.*/.test(router.route)) {
+			const { deltaY } = e;
+			const direction: Direction = deltaY < 0 ? "up" : "down";
+			scrollRef.current.pixels = clamp(scrollRef.current.pixels + deltaY, NavigateThreshold, 0);
+			throttle = setTimeout(() => {
+				if (scrollRef.current.pixels === NavigateThreshold || scrollRef.current.pixels === 0) {
+					const nextRoute = getNextRoute(router.route, direction);
+					if (router.route !== nextRoute) {
+						scrollRef.current.page = nextRoute;
+						scrollRef.current.pixels = direction === "up" ? NavigateThreshold : 0;
+						router.push(scrollRef.current.page);
+					}
 				}
-			}
-		}, 200);
+			}, 200);
+		}
 	}
 	const [loaded, setLoaded] = useState(false);
 	const [NavigateThreshold, setNavigateThreshold] = useState(200);
@@ -105,7 +107,7 @@ const App: React.FC<AppProps> = ({ Component, pageProps, router }) => {
 			onWheel={onWheel}
 		>
 			<ScrollBar {...getClamp()} />
-			<Navbar isOnTop={router.route !== "/"} linksVisible={router.route === "/progetti"} />
+			<Navbar isOnTop={router.route !== "/"} linksVisible={/\/progetti/gm.test(router.route)} />
 			<MobNavbar />
 			<div id="mainContainer">
 				<AnimatePresence exitBeforeEnter>
@@ -124,6 +126,10 @@ const App: React.FC<AppProps> = ({ Component, pageProps, router }) => {
 					}} />
 				}
 			</AnimatePresence>
+			{
+				router.query.id !== undefined &&
+				<motion.div id="projectIdContainer" />
+			}
 		</div>
 	) : (
 		<SWRConfig

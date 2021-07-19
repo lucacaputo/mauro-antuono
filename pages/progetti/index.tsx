@@ -1,12 +1,14 @@
 import Head from 'next/head'
-import { NextPage } from "next"
-import styles from "../styles/progetti.module.css";
+import { GetStaticPaths, GetStaticProps, NextPage } from "next"
+import styles from "../../styles/progetti.module.css";
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
-import ProjectLinks from '../components/ProjectLinks';
-import ProjectColumn from "../components/ProjectColumn";
-import { projects } from '../mocks/data';
+import ProjectLinks from '../../components/ProjectLinks';
+import ProjectColumn from "../../components/ProjectColumn";
 import { useRouter } from "next/router";
+import useSWR from "swr";
+import { API_BASE, getScale } from '../../helpers';
+import { ProjectCardProps } from '../../components/admin/ProjectCard';
 
 export const ordering = {
     CHRONOLOGICAL: 0,
@@ -16,34 +18,14 @@ export const ordering = {
 
 export type Scale = 1 | 2 | 3 | 4;
 
-const getScale = (sc: Scale) => {
-    switch(sc) {
-        case 1: 
-            return "UNIFAMILIARE";
-        case 2: 
-            return "STABILE RESIDENZIALE";
-        case 3: 
-            return "COMPLESSO RESIDENZIALE";
-        case 4: 
-            return "MASTERPLAN";
-    }
-}
+export type Project = ProjectCardProps;
+type ProjectWithYear = Project & { year: string };
 
-export type Project = {
-    image: string,
-    title: string,
-    pdfLink: string,
-    luogo: string,
-    data: Date,
-    scala: Scale,
-    year: string,
-    _id: string,
-}
-
-const Progetti: NextPage = () => {
+const Progetti: NextPage<{ projects: Project[], ok: boolean }> = ({ projects, ok }) => {
     const { route } = useRouter();
     const [order, setOrder] = useState(ordering.CHRONOLOGICAL);
-    const [prjs, setPorjects] = useState(projects);
+    const { data, isValidating, error } = useSWR<{ ok: boolean, projects: Project[] }, any>(`${API_BASE}/projects/projects`, { initialData: { ok, projects } });
+    const loading = (!data && !error) || isValidating;
     const getKey = () => {
         switch(order) {
             case ordering.CHRONOLOGICAL:
@@ -56,6 +38,11 @@ const Progetti: NextPage = () => {
     }
     const getPrjsArray = () => {
         const k = getKey();
+        const prjs: ProjectWithYear[] = loading 
+        ? []
+        : data.ok 
+            ? data.projects.map(p => ({ ...p, year: new Date(p.data).getFullYear().toString() }))
+            : [];
         let uniqueValues = [...new Set(prjs.map(p => p[k]))] as string[];
         const newObject = uniqueValues.reduce((acc, curr) => {
             acc[curr] = prjs.filter(pr => pr[k] === curr);
@@ -89,7 +76,7 @@ const Progetti: NextPage = () => {
             orderNum: ordering.LOCATION,
         }
     ]
-
+    const isScale = order === ordering.SCALE;
     return (
         <motion.div className={styles.progetti}>
             <Head>
@@ -100,12 +87,25 @@ const Progetti: NextPage = () => {
             {
                 route === "/progetti" &&
                 renderObject().map((p, i) => (
-                    <ProjectColumn key={`col-${i}`} title={p[0]} projects={p[1]} />
+                    <ProjectColumn key={`col-${i}`} title={isScale ? getScale(parseInt(p[0])) : p[0]} projects={p[1]} />
                 ))
             }
             </AnimatePresence>
         </motion.div>
     );
+}
+
+export const getStaticProps: GetStaticProps = async () => {
+    const data = await fetch(`${API_BASE}/projects/projects`)
+        .then(r => r.json())
+        .catch(err => console.log(err));
+    if (!data.ok) console.log(data)
+    return {
+        props: {
+            projects: data.projects,
+            ok: data.ok
+        }
+    }
 }
 
 export default Progetti;
