@@ -1,8 +1,8 @@
 import Head from 'next/head'
-import { GetStaticPaths, GetStaticProps, NextPage } from "next"
+import { GetStaticProps, NextPage } from "next"
 import styles from "../../styles/progetti.module.css";
 import { AnimatePresence, motion } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ProjectLinks from '../../components/ProjectLinks';
 import ProjectColumn from "../../components/ProjectColumn";
 import { useRouter } from "next/router";
@@ -22,8 +22,13 @@ export type Project = ProjectCardProps;
 type ProjectWithYear = Project & { year: string };
 
 const Progetti: NextPage<{ projects: Project[], ok: boolean }> = ({ projects, ok }) => {
-    const { route } = useRouter();
+    const router = useRouter();
     const [order, setOrder] = useState(ordering.CHRONOLOGICAL);
+    useEffect(() => {
+        if (router.query.o) {
+            setOrder(parseInt(router.query.o as string));
+        }
+    }, [router.query]);
     const { data, isValidating, error } = useSWR<{ ok: boolean, projects: Project[] }, any>(`${API_BASE}/projects/projects`, { initialData: { ok, projects } });
     const loading = (!data && !error) || isValidating;
     const getKey = () => {
@@ -85,9 +90,9 @@ const Progetti: NextPage<{ projects: Project[], ok: boolean }> = ({ projects, ok
             <ProjectLinks links={sideLinks} currentOrdering={order} />
             <AnimatePresence>
             {
-                route === "/progetti" &&
+                router.route === "/progetti" &&
                 renderObject().map((p, i) => (
-                    <ProjectColumn key={`col-${i}`} title={isScale ? getScale(parseInt(p[0])) : p[0]} projects={p[1]} />
+                    <ProjectColumn order={order} key={`col-${i}`} title={isScale ? getScale(parseInt(p[0])) : p[0]} projects={p[1]} />
                 ))
             }
             </AnimatePresence>

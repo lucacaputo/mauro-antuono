@@ -1,10 +1,11 @@
 import { motion, Variants } from "framer-motion";
 import { GetStaticPaths, GetStaticProps, NextPage } from "next";
 import { createPortal } from "react-dom";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "../../styles/progettosingolo.module.css";
 import { API_BASE, getScale, toHumanDate } from "../../helpers";
 import Carousel from "../../components/ProjectCarousel";
+import { useRouter } from "next/router";
 
 type ProjectProps = {
     project: {
@@ -34,6 +35,7 @@ type ProjectProps = {
 }
 
 const Progetto: NextPage<ProjectProps> = ({ project }) => {
+    const router = useRouter();
     const [parent, setParent] = useState<HTMLDivElement | null>(null);
     const wrapperVariants: Variants = {
         initial: {
@@ -63,6 +65,8 @@ const Progetto: NextPage<ProjectProps> = ({ project }) => {
             },
         },
     };
+    const backOnClick = () => router.push('/progetti?o='+router.query.o)
+    const preventBack = (e: React.MouseEvent) => e.stopPropagation();
     useEffect(() => {
         setParent(document.querySelector('#projectIdContainer') as HTMLDivElement);
     }, [parent]);
@@ -73,10 +77,12 @@ const Progetto: NextPage<ProjectProps> = ({ project }) => {
                 variants={wrapperVariants}
                 initial="initial"
                 animate="animate"
+                onClick={backOnClick}
             >
                 <motion.div
                     className={styles.project}
                     variants={projectVariants}
+                    onClick={preventBack}
                 >
                     <Carousel slides={project.immagini} initialSlideId={project.thumbnail} />
                     <div className={styles.projectBody}>

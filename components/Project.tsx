@@ -7,9 +7,10 @@ import Link from "next/link";
 
 type ProjectProps = {
     project: ProjectType,
+    order: number,
 }
 
-const Project: React.FC<ProjectProps> = ({ project }) => {
+const Project: React.FC<ProjectProps> = ({ project, order }) => {
     const { titolo, thumbnail, _id } = project;
     const thumbUrl = project.img_details.find(d => d._id === thumbnail).url || null;
     return (
@@ -18,7 +19,7 @@ const Project: React.FC<ProjectProps> = ({ project }) => {
                 className={styles.project}
                 layout
             >
-                <Link href={`progetti/${_id}`}>
+                <Link href={`progetti/${_id}?o=${order}`}>
                     <a>
                         <img src={`${API_BASE}/${thumbUrl.replace(/\\/gm, '/')}`} alt={`preview ${titolo}`}/>
                     </a>
