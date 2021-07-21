@@ -17,6 +17,7 @@ import Head from "next/head";
 import * as ga from '../lib/ga'
 import "../styles/adminStyle.css";
 import MobNavbar from "../components/mobile/Navbar/Navbar";
+import ClientAppContext from "../context/ClientAppContext";
 
 type Direction = "up" | "down";
 
@@ -102,35 +103,37 @@ const App: React.FC<AppProps> = ({ Component, pageProps, router }) => {
 		}
 	}
 	return !/\/admin/gm.test(router.route) ? (
-		<div 
-			className="app"
-			onWheel={onWheel}
-		>
-			<ScrollBar {...getClamp()} />
-			<Navbar isOnTop={router.route !== "/"} linksVisible={/\/progetti/gm.test(router.route)} />
-			<MobNavbar />
-			<div id="mainContainer">
-				<AnimatePresence exitBeforeEnter>
-					<Component {...pageProps} key={router.route} />
+		<ClientAppContext>
+			<div 
+				className="app"
+				onWheel={onWheel}
+			>
+				<ScrollBar {...getClamp()} />
+				<Navbar isOnTop={router.route !== "/"} linksVisible={/\/progetti/gm.test(router.route)} />
+				<MobNavbar />
+				<div id="mainContainer">
+					<AnimatePresence exitBeforeEnter>
+						<Component {...pageProps} key={router.route} />
+					</AnimatePresence>
+					<SideNav isVisible={router.route !== "/"} />
+					<InfoContainer isVisible={router.route !== "/"} />
+				</div>
+				<AnimatePresence>
+					{
+						router.route !== "/progetti" &&
+						<ScrollArrow onClick={() => {
+							scrollRef.current.pixels = 0;
+							scrollRef.current.page = getNextRoute(router.route, "down");
+							router.push(scrollRef.current.page);
+						}} />
+					}
 				</AnimatePresence>
-				<SideNav isVisible={router.route !== "/"} />
-				<InfoContainer isVisible={router.route !== "/"} />
-			</div>
-			<AnimatePresence>
 				{
-					router.route !== "/progetti" &&
-					<ScrollArrow onClick={() => {
-						scrollRef.current.pixels = 0;
-						scrollRef.current.page = getNextRoute(router.route, "down");
-						router.push(scrollRef.current.page);
-					}} />
+					router.query.id !== undefined &&
+					<motion.div id="projectIdContainer" />
 				}
-			</AnimatePresence>
-			{
-				router.query.id !== undefined &&
-				<motion.div id="projectIdContainer" />
-			}
-		</div>
+			</div>
+		</ClientAppContext>
 	) : (
 		<SWRConfig
                 value={{

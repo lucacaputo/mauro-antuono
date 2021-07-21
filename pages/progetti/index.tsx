@@ -9,6 +9,7 @@ import { useRouter } from "next/router";
 import useSWR from "swr";
 import { API_BASE, getScale } from '../../helpers';
 import { ProjectCardProps } from '../../components/admin/ProjectCard';
+import { useIsMobile } from '../../context/ClientAppContext';
 
 export const ordering = {
     CHRONOLOGICAL: 0,
@@ -24,6 +25,7 @@ type ProjectWithYear = Project & { year: string };
 const Progetti: NextPage<{ projects: Project[], ok: boolean }> = ({ projects, ok }) => {
     const router = useRouter();
     const [order, setOrder] = useState(ordering.CHRONOLOGICAL);
+    const mobile = useIsMobile();
     useEffect(() => {
         if (router.query.o) {
             setOrder(parseInt(router.query.o as string));
@@ -90,7 +92,7 @@ const Progetti: NextPage<{ projects: Project[], ok: boolean }> = ({ projects, ok
             <ProjectLinks links={sideLinks} currentOrdering={order} />
             <AnimatePresence>
             {
-                router.route === "/progetti" &&
+                router.route === "/progetti" && !mobile &&
                 renderObject().map((p, i) => (
                     <ProjectColumn order={order} key={`col-${i}`} title={isScale ? getScale(parseInt(p[0])) : p[0]} projects={p[1]} />
                 ))

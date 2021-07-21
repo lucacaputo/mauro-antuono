@@ -1,4 +1,5 @@
 import { motion, AnimatePresence, Variants } from "framer-motion";
+import { useRouter } from "next/router";
 import styles from "../styles/infocont.module.css";
 
 type InfoContainerProps = {
@@ -6,6 +7,7 @@ type InfoContainerProps = {
 }
 
 const InfoContainer: React.FC<InfoContainerProps> = ({ isVisible }) => {
+    const router = useRouter();
     const contVar: Variants = {
         invisible: {
             y: "100vh",
@@ -39,6 +41,10 @@ const InfoContainer: React.FC<InfoContainerProps> = ({ isVisible }) => {
                         exit="exit"
                         variants={contVar}
                         className={styles.infocont}
+                        style={{
+                            border: router.route === '/progetti' ? 'none' : null,
+                            padding: router.route === '/progetti' ? 0 : null,
+                        }}
                     />
                 )
             }

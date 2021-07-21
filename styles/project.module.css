@@ -1,9 +1,10 @@
 .project {
     width: 65px;
+    height: 65px;
     margin-right: 10px;
     position: relative;
     cursor: pointer;
-    overflow: visible;
+    overflow: hidden;
     display: inline-block;
     margin-bottom: 10px;
     max-width: calc(20% - 10px);
@@ -11,4 +12,8 @@
 .project img {
     width: 100%;
     display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }

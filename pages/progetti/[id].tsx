@@ -92,7 +92,15 @@ const Progetto: NextPage<ProjectProps> = ({ project }) => {
                                 project.pdfs.map(p => (
                                     <div className={styles.pdf} key={p._id}>
                                         <img src={API_BASE + '/' + p.thumbnail} alt={`project ${project.titolo} pdf thumbnail`} />
-                                        <a target="_blank" href={API_BASE + '/' + p.url} className={styles.btn}>Vedi</a>
+                                        <motion.a 
+                                            target="_blank" 
+                                            href={API_BASE + '/' + p.url} 
+                                            className={styles.btn}
+                                            initial={{ x: '-50%', scale: 1 }}
+                                            whileHover={{ scale: 1.1 }}
+                                        >
+                                                Vedi
+                                        </motion.a>
                                     </div>
                                 ))
                             }

@@ -17,9 +17,13 @@
     margin: 5vh auto 0 auto;
     min-height: 90vh;
     overflow-y: auto;
-    background-color: #fff;
+    background-color: #303030;
     border-radius: 6px;
     box-shadow: 0 0 15px #141414;
+    color: #f6f6f6;
+}
+.project * {
+    color: inherit;
 }
 .projectPdfs {
     display: flex;
@@ -40,13 +44,29 @@
 .btn {
     margin-block-end: 0;
     margin-block-start: 0;
-    border: 1px solid #141414;
+    border: 1px solid #f6f6f6;
     padding: 5px 20px;
     background-color: #fff;
     font-size: 16px;
     line-height: 16px;
+    display: inline-block;
+    position: relative;
+    left: 50%;
+    color: #303030;
 }
 .projectBody {
     margin-top: 20px;
     padding: 0 15px;
+}
+@media screen and (max-width: 767px) {
+    .project {
+        width: 95%;
+    }
+    .pdf {
+        width: 60px;
+    }
+    .btn  {
+        padding: 5px 10px;
+        font-size: 14px;
+    }
 }
