@@ -114,7 +114,7 @@ const Pdfs: NextPage = () => {
                         <FileChooser 
                             files={data.pdfs!.map(e => ({ ...e, url: e.thumbnail }))}
                             withSelectedAction={del}
-                            actionText="fottiti"
+                            actionText="Elimina"
                         />
                     }
                 </div>
