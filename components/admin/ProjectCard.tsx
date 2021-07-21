@@ -3,6 +3,7 @@ import Modal from "react-modal";
 import { useState } from "react";
 import React from "react";
 import FileChooser from "./FileChooser";
+import { ImageObject, PdfObject } from "../../pages/admin/projects";
 
 export type ProjectCardProps = {
     data: string,
@@ -29,6 +30,8 @@ export type ProjectCardProps = {
     titolo: string,
     __v: number,
     _id: string,
+    allImages: ImageObject[],
+    allPdfs: PdfObject[],
 }
 export type EditProjectFormState = {
     titolo: string,
@@ -52,6 +55,7 @@ const ProjectCard: React.FC<ProjectCardProps> = props => {
         immagini: [...props.immagini],
         pdfs: [...props.pdfs],
     }
+    const { allImages, allPdfs } = props;
     const [{isOpen, type}, setOpen] = useState<ModalState>({
         isOpen: false,
         type: 'modify',
@@ -204,8 +208,10 @@ const ProjectCard: React.FC<ProjectCardProps> = props => {
                                         <div className="form-group">
                                             <label>Immagini</label>
                                             <FileChooser 
-                                                files={props.img_details}
+                                                files={allImages}
                                                 withSelectedAction={null}
+                                                initialSelectionMode
+                                                initialSelection={props.img_details.map(i => i._id)}
                                                 onSelect={id => setEditFormState(s => ({
                                                     ...s,
                                                     immagini: [...s.immagini, id],
@@ -228,8 +234,10 @@ const ProjectCard: React.FC<ProjectCardProps> = props => {
                                         <div className="form-group">
                                             <label>PDFs</label>
                                             <FileChooser 
-                                                files={props.pdf_details.map(p => ({ ...p, url: p.thumbnail }))}
+                                                files={allPdfs.map(p => ({ ...p, url: p.thumbnail }))}
                                                 withSelectedAction={null}
+                                                initialSelectionMode
+                                                initialSelection={props.pdf_details.map(pdf => pdf._id)}
                                                 onSelect={id => setEditFormState(s => ({
                                                     ...s,
                                                     pdfs: [...s.pdfs, id],

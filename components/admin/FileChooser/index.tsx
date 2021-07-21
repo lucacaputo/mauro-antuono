@@ -16,6 +16,8 @@ export interface FileChooserProps<T extends BaseFile> {
     files: T[],
     withSelectedAction: (selection: string[]) => void,
     actionText: string,
+    initialSelectionMode?: boolean,
+    initialSelection?: string[],
     responsive?: FileChooserBreakpoint[],
     style?: CSSProperties,
     onSelect?: (id: string) => void,
@@ -24,10 +26,21 @@ export interface FileChooserProps<T extends BaseFile> {
 }
 
 function FileChooser<T extends BaseFile>(props: FileChooserProps<T>): React.ReactElement<FileChooserProps<T>> {
-    const { files, withSelectedAction, actionText, responsive, style, onSelect, onRemove, disableActionButton } = props;
+    const { 
+        files, 
+        withSelectedAction, 
+        actionText, 
+        responsive, 
+        style, 
+        onSelect, 
+        onRemove, 
+        disableActionButton, 
+        initialSelectionMode, 
+        initialSelection,
+    } = props;
     const [perRow, setPerRow] = useState<number | undefined>(undefined);
-    const [selectionMode, setSelectionMode] = useState(false);
-    const [selectedFiles, setSelectedFiles] = useState<string[]>([]);
+    const [selectionMode, setSelectionMode] = useState(initialSelectionMode || false);
+    const [selectedFiles, setSelectedFiles] = useState<string[]>(initialSelection || []);
     let debounce: ReturnType<typeof setTimeout> | null = null;
     useEffect(() => {
         const resp = () => {
