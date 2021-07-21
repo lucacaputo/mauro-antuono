@@ -6,6 +6,8 @@ import styles from "../../styles/progettosingolo.module.css";
 import { API_BASE, getScale, toHumanDate } from "../../helpers";
 import Carousel from "../../components/ProjectCarousel";
 import { useRouter } from "next/router";
+import { AiOutlineClose } from "react-icons/ai";
+import { useIsMobile } from '../../context/ClientAppContext';
 
 type ProjectProps = {
     project: {
@@ -37,6 +39,7 @@ type ProjectProps = {
 const Progetto: NextPage<ProjectProps> = ({ project }) => {
     const router = useRouter();
     const [parent, setParent] = useState<HTMLDivElement | null>(null);
+    const mobile = useIsMobile();
     const wrapperVariants: Variants = {
         initial: {
             opacity: 0,
@@ -65,6 +68,24 @@ const Progetto: NextPage<ProjectProps> = ({ project }) => {
             },
         },
     };
+    const closerVariants: Variants = {
+        initial: {
+            y: '-100%',
+            opacity: 0,
+            x: '-50%',
+            rotate: -50
+        },
+        animate: {
+            opacity: 1,
+            y: '0%',
+            rotate: 0,
+            transition: {
+                type: 'spring',
+                stiffness: 300,
+                damping: 38,
+            }
+        }
+    }
     const backOnClick = () => router.push('/progetti?o='+router.query.o)
     const preventBack = (e: React.MouseEvent) => e.stopPropagation();
     useEffect(() => {
@@ -79,6 +100,15 @@ const Progetto: NextPage<ProjectProps> = ({ project }) => {
                 animate="animate"
                 onClick={backOnClick}
             >
+                {
+                    mobile &&
+                    <motion.button
+                        className={styles.closer}
+                        variants={closerVariants}
+                    >
+                        <AiOutlineClose size={23} color="#f6f6f6" />
+                    </motion.button>
+                }
                 <motion.div
                     className={styles.project}
                     variants={projectVariants}

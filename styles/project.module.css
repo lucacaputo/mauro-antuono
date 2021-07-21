@@ -17,3 +17,9 @@
     left: 50%;
     transform: translate(-50%, -50%);
 }
+@media screen and (max-width: 767px) {
+    .project {
+        width: 20%;
+        height: 50px;
+    }
+}

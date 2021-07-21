@@ -10,6 +10,7 @@ import useSWR from "swr";
 import { API_BASE, getScale } from '../../helpers';
 import { ProjectCardProps } from '../../components/admin/ProjectCard';
 import { useIsMobile } from '../../context/ClientAppContext';
+import Project from '../../components/Project';
 
 export const ordering = {
     CHRONOLOGICAL: 0,
@@ -33,6 +34,14 @@ const Progetti: NextPage<{ projects: Project[], ok: boolean }> = ({ projects, ok
     }, [router.query]);
     const { data, isValidating, error } = useSWR<{ ok: boolean, projects: Project[] }, any>(`${API_BASE}/projects/projects`, { initialData: { ok, projects } });
     const loading = (!data && !error) || isValidating;
+    const sortedProjects: ProjectWithYear[] = mobile
+        ? data.projects.map(p => ({ ...p, year: new Date(p.data).getFullYear().toString() }))
+        : [];
+    sortedProjects.sort((a, b) => {
+        const da = new Date(a.data);
+        const db = new Date(b.data);
+        return da.getTime() > db.getTime() ? -1 : 1
+    });
     const getKey = () => {
         switch(order) {
             case ordering.CHRONOLOGICAL:
@@ -98,6 +107,16 @@ const Progetti: NextPage<{ projects: Project[], ok: boolean }> = ({ projects, ok
                 ))
             }
             </AnimatePresence>
+            {
+                mobile &&
+                <div className={styles.mobileProjectWrapper}>
+                    {
+                        sortedProjects.map(p => (
+                            <Project key={p._id} project={p} order={order} />
+                        ))
+                    }
+                </div>
+            }
         </motion.div>
     );
 }

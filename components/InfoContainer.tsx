@@ -1,6 +1,7 @@
 import { motion, AnimatePresence, Variants } from "framer-motion";
 import { useRouter } from "next/router";
 import styles from "../styles/infocont.module.css";
+import { useIsMobile } from '../context/ClientAppContext';
 
 type InfoContainerProps = {
     isVisible: boolean,
@@ -8,6 +9,7 @@ type InfoContainerProps = {
 
 const InfoContainer: React.FC<InfoContainerProps> = ({ isVisible }) => {
     const router = useRouter();
+    const mobile = useIsMobile();
     const contVar: Variants = {
         invisible: {
             y: "100vh",
@@ -33,7 +35,7 @@ const InfoContainer: React.FC<InfoContainerProps> = ({ isVisible }) => {
     return (
         <AnimatePresence>
             {
-                isVisible && (
+                isVisible && !(router.route === '/progetti' && mobile) && (
                     <motion.div
                         id="infoCont"
                         initial="invisible"
