@@ -128,10 +128,12 @@ const App: React.FC<AppProps> = ({ Component, pageProps, router }) => {
 						}} />
 					}
 				</AnimatePresence>
-				{
-					router.query.id !== undefined &&
-					<motion.div id="projectIdContainer" />
-				}
+				<AnimatePresence exitBeforeEnter>
+					{
+						router.query.id !== undefined &&
+						<motion.div exit={{ opacity: 0, transition: { when: 'afterChildren' } }} id="projectIdContainer" />
+					}
+				</AnimatePresence>
 			</div>
 		</ClientAppContext>
 	) : (

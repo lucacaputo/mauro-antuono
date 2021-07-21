@@ -42,7 +42,7 @@ const Contatti: NextPage = () => {
                 <title>Mario Longobardi | Contatti</title>
             </Head>
             <p dangerouslySetInnerHTML={{
-                __html: `${content}`
+                __html: content
             }} />
         </motion.div>,
         parent

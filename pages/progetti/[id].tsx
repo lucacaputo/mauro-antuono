@@ -50,6 +50,12 @@ const Progetto: NextPage<ProjectProps> = ({ project }) => {
                 when: 'beforeChildren',
             },
         },
+        exit: {
+            opacity: 0,
+            transition: {
+                when: 'afterChildren'
+            }
+        }
     };
     const projectVariants: Variants = {
         initial: {
@@ -67,6 +73,16 @@ const Progetto: NextPage<ProjectProps> = ({ project }) => {
                 damping: 40,
             },
         },
+        exit: {
+            y: 50,
+            scale: .8,
+            opacity: 0,
+            transition: {
+                type: 'spring',
+                stiffness: 280,
+                damping: 40,
+            }, 
+        }
     };
     const closerVariants: Variants = {
         initial: {
@@ -79,6 +95,16 @@ const Progetto: NextPage<ProjectProps> = ({ project }) => {
             opacity: 1,
             y: '0%',
             rotate: 0,
+            transition: {
+                type: 'spring',
+                stiffness: 300,
+                damping: 38,
+            }
+        },
+        exit: {
+            opacity: 0,
+            y: '-100%',
+            rotate: -50,
             transition: {
                 type: 'spring',
                 stiffness: 300,
@@ -98,6 +124,7 @@ const Progetto: NextPage<ProjectProps> = ({ project }) => {
                 variants={wrapperVariants}
                 initial="initial"
                 animate="animate"
+                exit="exit"
                 onClick={backOnClick}
             >
                 {
