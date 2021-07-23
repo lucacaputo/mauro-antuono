@@ -141,7 +141,7 @@ const Progetto: NextPage<ProjectProps> = ({ project }) => {
                     variants={projectVariants}
                     onClick={preventBack}
                 >
-                    <Carousel slides={project.immagini} initialSlideId={project.thumbnail} />
+                    <Carousel slides={project.immagini} />
                     <div className={styles.projectBody}>
                         <h3>PDFs</h3>
                         <div className={styles.projectPdfs}>

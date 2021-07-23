@@ -4,7 +4,7 @@ import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 import styles from "../styles/projectcarousel.module.css";
 
 type CarouselProps = {
-    initialSlideId: string,
+    initialSlideId?: string,
     slides: ({
         url: string,
         _id: string
@@ -12,7 +12,6 @@ type CarouselProps = {
 }
 
 const ProjectCarousel: React.FC<CarouselProps> = ({ slides }) => {
-    console.log(slides)
     return (
         <Carousel
             height='50vh'
