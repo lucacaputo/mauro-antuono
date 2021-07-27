@@ -82,6 +82,52 @@ export const toDate = (d: Date) => {
     return `${year}-${month}-${day}`;
 }
 
-export const editProject = (project: EditProjectFormState) => {
-    
+export const editProject = async (
+    project: EditProjectFormState, 
+    callback: () => void, 
+    pid: string, 
+    errorCallback?: (message: string) => void
+) => {
+    const res = await fetch(`${API_BASE}/projects/projects`, {
+        method: 'PUT',
+        headers: {
+            'Authorization': `Bearer ${window.localStorage.getItem('token')}`,
+            'Content-type': 'Application/json',
+        },
+        body: JSON.stringify({
+            ...project,
+            _id: pid,
+        })
+    })
+    .then(r => r.json())
+    .then(r => {
+        if (r.ok) {
+            callback();
+        } else {
+            errorCallback && errorCallback(r.error);
+            if (!errorCallback) throw new Error('request failed');
+        }
+    })
+    .catch(console.log);
+}
+export const deleteProject = async (_id: string, callback: () => void, callbackError?: (msg: string) => void) => {
+    await fetch(`${API_BASE}/projects/projects`, {
+        method: 'DELETE',
+        headers: {
+            'Authorization': `Bearer ${window.localStorage.getItem('token')}`,
+            'Content-type': 'Application/json',
+        },
+        body: JSON.stringify({ _id }),
+    })
+    .then(res => res.json())
+    .then(res => {
+        if (res.ok) callback()
+        else {
+            callbackError && callbackError(res.error);
+            if (!callbackError) {
+                throw new Error('request failed');
+            }
+        }
+    })
+    .catch(console.log);
 }

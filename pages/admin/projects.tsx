@@ -98,7 +98,7 @@ const Projects: NextPage = () => {
                             {
                                 data.projects.map(p => (
                                     <div className="col-lg-4 col-md-6 col-12 mb-2" key={p._id}>
-                                        <ProjectCard allImages={imageData?.images} allPdfs={pdfData?.pdfs} {...p} />
+                                        <ProjectCard callback={mutate} allImages={imageData?.images} allPdfs={pdfData?.pdfs} {...p} />
                                     </div>
                                 ))
                             }

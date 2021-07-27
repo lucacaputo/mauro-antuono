@@ -1,9 +1,10 @@
-import { API_BASE, getScale, toDate, toHumanDate } from "../../helpers";
+import { API_BASE, deleteProject, editProject, getScale, toDate, toHumanDate } from "../../helpers";
 import Modal from "react-modal";
 import { useState } from "react";
 import React from "react";
 import FileChooser from "./FileChooser";
 import { ImageObject, PdfObject } from "../../pages/admin/projects";
+import { toast, ToastContainer } from "react-toastify";
 
 export type ProjectCardProps = {
     data: string,
@@ -32,6 +33,7 @@ export type ProjectCardProps = {
     _id: string,
     allImages: ImageObject[],
     allPdfs: PdfObject[],
+    callback: () => void,
 }
 export type EditProjectFormState = {
     titolo: string,
@@ -46,7 +48,7 @@ Modal.setAppElement('body');
 type ModalTypes = 'more' | 'modify';
 type ModalState = { isOpen: boolean, type: ModalTypes };
 
-const ProjectCard: React.FC<ProjectCardProps> = props => {
+const ProjectCard: React.FC<ProjectCardProps> = ({ callback, ...props }) => {
     const initialFormState = {
         titolo: props.titolo,
         luogo: props.luogo,
@@ -61,6 +63,43 @@ const ProjectCard: React.FC<ProjectCardProps> = props => {
         type: 'modify',
     });
     const [editFormState, setEditFormState] = useState<EditProjectFormState>(initialFormState);
+    const submit = (e: React.FormEvent) => {
+        e.preventDefault();
+        editProject(
+            editFormState,
+            () => {
+                setOpen(o => ({ ...o, isOpen: false }));
+                callback();
+            },
+            props._id,
+            msg => toast.error(msg, {
+                position: "bottom-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            })
+        )
+    }
+    const del = () => {
+        if (confirm('Cancellare il progetto?')) {
+            deleteProject(
+                props._id,
+                callback,
+                msg => toast.error(msg, {
+                    position: "bottom-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                })
+            )
+        }
+    }
     const open = (mode: ModalTypes) => setOpen({ isOpen: true, type: mode });
     const close = () => {
         setOpen(s => ({ ...s, isOpen: false }));
@@ -78,7 +117,7 @@ const ProjectCard: React.FC<ProjectCardProps> = props => {
         <>
             <div className="card w-100">
                 <img
-                    src={API_BASE + '/' + props.img_details.find(x => x._id === props.thumbnail).url.replace(/\\/gm, '/')}
+                    src={API_BASE + '/' + props.img_details.find(x => x._id === props.thumbnail)?.url.replace(/\\/gm, '/')}
                     alt="Project thumbnail"
                     className="card-img-top"
                 />
@@ -106,6 +145,7 @@ const ProjectCard: React.FC<ProjectCardProps> = props => {
                     <button
                         className="btn btn-danger btn-sm"
                         type="button"
+                        onClick={del}
                     >
                         Elimina
                     </button>
@@ -169,7 +209,7 @@ const ProjectCard: React.FC<ProjectCardProps> = props => {
                     {
                         type === 'modify' &&
                         <>
-                            <form>
+                            <form onSubmit={submit}>
                                 <div className="form-row">
                                     <div className="col-md-6 col-12">
                                         <div className="form-group">
@@ -282,6 +322,17 @@ const ProjectCard: React.FC<ProjectCardProps> = props => {
                     CHIUDI
                 </button>
             </Modal>
+            <ToastContainer
+                position="bottom-center"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+            />
         </>
     );
 }
