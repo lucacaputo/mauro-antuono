@@ -249,7 +249,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ callback, ...props }) => {
                                         <div className="form-group">
                                             <label>Immagini</label>
                                             <FileChooser 
-                                                files={allImages}
+                                                files={allImages || []}
                                                 withSelectedAction={null}
                                                 initialSelectionMode
                                                 initialSelection={props.img_details.map(i => i._id)}
@@ -275,7 +275,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ callback, ...props }) => {
                                         <div className="form-group">
                                             <label>PDFs</label>
                                             <FileChooser 
-                                                files={allPdfs.map(p => ({ ...p, url: p.thumbnail }))}
+                                                files={allPdfs.map(p => ({ ...p, url: p.thumbnail })) || []}
                                                 withSelectedAction={null}
                                                 initialSelectionMode
                                                 initialSelection={props.pdf_details.map(pdf => pdf._id)}
