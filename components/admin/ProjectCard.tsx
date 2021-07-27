@@ -5,6 +5,7 @@ import React from "react";
 import FileChooser from "./FileChooser";
 import { ImageObject, PdfObject } from "../../pages/admin/projects";
 import { toast, ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 export type ProjectCardProps = {
     data: string,

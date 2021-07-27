@@ -4,6 +4,8 @@ import { AiOutlinePlus, AiFillCloseCircle } from "react-icons/ai";
 import { motion, AnimatePresence, Variants } from "framer-motion";
 import { useState } from 'react';
 import FileChooser from './FileChooser';
+import { toast, ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 type AddProjectFormProps = {
     onSubmit: (state: FormType) => void,
@@ -54,6 +56,24 @@ const AddProjectForm: React.FC<AddProjectFormProps> = ({ onSubmit }) => {
     const submit = (e: React.FormEvent) => {
         e.preventDefault();
         onSubmit(formState);
+        setToggled(false);
+        setFormState({
+            titolo: '',
+            luogo: '',
+            scala: 1,
+            data: new Date(),
+            immagini: [],
+            pdfs: [],
+        });
+        toast.success('Progetto aggiunto!', {
+            position: "bottom-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+        });
     }
     return (
         <>
@@ -183,6 +203,17 @@ const AddProjectForm: React.FC<AddProjectFormProps> = ({ onSubmit }) => {
                     </motion.div>
                 }
             </AnimatePresence>
+            <ToastContainer
+                position="bottom-center"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+            />
         </>
     );
 }
