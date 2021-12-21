@@ -29,3 +29,11 @@
     text-align: center;
     display: block;
 }
+@media screen and (max-width: 767px) {
+    .navbar h1 {
+        font-size: 18px;
+    }
+    .navLinks {
+        display: none;
+    }
+}

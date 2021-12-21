@@ -1,48 +1,23 @@
 .project {
-    width: 100px;
+    width: 65px;
+    height: 65px;
     margin-right: 10px;
     position: relative;
     cursor: pointer;
-    overflow: visible;
+    overflow: hidden;
     display: inline-block;
     margin-bottom: 10px;
     max-width: calc(20% - 10px);
 }
-.tooltip {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    width: max-content;
-    padding: 5px 10px;
-    border-radius: 4px;
-    background-color: #141414;
-    color: #f6f6f6;
-    text-align: center;
-    box-shadow: 0 0 10px #141414;
-    transform-origin: left;
-    margin-block-end: 0;
-    font-size: 10px;
-    font-family: futura;
-    opacity: 0;
-    transform: scale(.5) translate(-50%, 0%);
-    transition: transform .2s ease, opacity .2s linear;
-    will-change: transform, opacity;
-}
-.project:hover .tooltip {
-    transform: scale(1) translate(-50%, -110%);
-    opacity: 1;
-}
-.tooltip::before {
-    content: '';
-    position: absolute;
-    top: calc(100% - 1px);
-    left: 50%;
-    transform: translateX(-50%);
-    border-width: 10px 5px 0 5px;
-    border-color: #141414 transparent transparent transparent;
-    border-style: solid;
-}
 .project img {
     width: 100%;
+    height: 100%;
+    object-fit: cover;
     display: block;
+}
+@media screen and (max-width: 767px) {
+    .project {
+        width: 20%;
+        height: 50px;
+    }
 }

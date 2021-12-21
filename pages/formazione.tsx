@@ -42,7 +42,7 @@ const Formazione: NextPage = () => {
                 <title>Mario Longobardi | Formazione</title>
             </Head>
             <p dangerouslySetInnerHTML={{
-                __html: `${content}`
+                __html: content
             }} />
         </motion.div>,
         parent

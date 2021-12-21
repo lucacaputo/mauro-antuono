@@ -1,3 +1,21 @@
+.ReactModal__Overlay {
+    opacity: 0;
+    transition: opacity 300ms ease-in-out;
+}
+
+.ReactModal__Overlay--after-open{
+    opacity: 1;
+}
+
+.ReactModal__Overlay--before-close{
+    opacity: 0;
+}
+.ReactModalPortal {
+    z-index: 11;
+}
+.ReactModal__Overlay  {
+    z-index: inherit;
+}
 .tox-statusbar__text-container {
     display: none !important;
 }
@@ -35,4 +53,100 @@
     width: 100%;
     height: 50px;
     border-bottom: 1px solid rgba(0,0,0,.2)
+}
+.fileChooserWrapper {
+    height: 255px;
+    overflow-y: auto;
+}
+.file_ch {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.file_chooser_entry {
+    position: relative;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.circular_selector {
+    position: absolute;
+    left: 8%;
+    top: 8%;
+    width: 20px;
+    height: 20px;
+    border-radius: 100%;
+    border: 1px solid rgba(0,0,0,.5);
+    background-color: rgba(255,255,255,.5);
+    cursor: pointer;
+}
+.selected_circle {
+    width: 70%;
+    height: 70%;
+    border-radius: 100%;
+    position: relative;
+    top: 50%;
+    left: 50%;
+    background-color: var(--primary);
+}
+
+.loader {
+    animation: loading 1s linear 0s infinite;
+}
+
+@keyframes loading {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.addProjectToggler {
+    background-color: var(--primary);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    border: none;
+    box-shadow: 0 0 10px #141414;   
+    position: relative;
+}
+.addProjectToggler::after {
+    content: 'Nuovo progetto';
+    padding-left: 25px;
+    font-size: 18px;
+    position: absolute;
+    width: max-content;
+    top: 50%;
+    left: 100%;
+    transform: translateY(-50%);
+}
+.newProjectFormContainer {
+    padding: 15px;
+    border-radius: 6px;
+    box-shadow: 0 0 15px #141414;
+    background-color: #f6f6f6;
+    top: 50%;
+    left: calc(50% + 40px);
+    position: fixed;
+    z-index: 3;
+    max-width: 800px;
+    width: 800px;
+}
+.newProjectFormContainer > button {
+    border: none;
+    position: absolute;
+    top: -50px;
+    right: 15px;
+    z-index: 3;
+    background-color: transparent;
+    padding: 0;
 }

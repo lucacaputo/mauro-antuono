@@ -82,7 +82,7 @@ const SideNav: React.FC<SideNavProps> = ({ isVisible }) => {
                     >
                         <AnimatePresence exitBeforeEnter>
                             {
-                                route !== "/progetti" && (
+                                !/\/progetti/gm.test(route) && (
                                     <motion.ul
                                         variants={ulVar}
                                         initial="initial"
@@ -106,7 +106,7 @@ const SideNav: React.FC<SideNavProps> = ({ isVisible }) => {
                                 )
                             }
                             {
-                                route === "/progetti" && (
+                                /\/progetti/gm.test(route) && (
                                     <motion.ul 
                                         key="prj"
                                         id="appendProjectLinks"

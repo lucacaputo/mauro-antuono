@@ -1,36 +1,31 @@
-import { motion, Variants } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Project as ProjectType } from '../pages/progetti';
 import styles from "../styles/project.module.css";
+import Tooltip from '@material-ui/core/Tooltip';
+import { API_BASE } from '../helpers';
+import Link from "next/link";
 
 type ProjectProps = {
     project: ProjectType,
+    order: number,
 }
 
-const Project: React.FC<ProjectProps> = ({ project }) => {
-    const { image, title } = project;
-    const projectVar: Variants = {
-        initial: {
-            scale: 1
-        },
-        hover: {
-            scale: 1.3
-        }
-    }
+const Project: React.FC<ProjectProps> = ({ project, order }) => {
+    const { titolo, thumbnail, _id } = project;
+    const thumbUrl = project.img_details.find(d => d._id === thumbnail).url || null;
     return (
-        <motion.div
-            initial="initial"
-            whileHover="hover"
-            variants={projectVar}
-            className={styles.project}
-            layout
-        >
-            <img src={image} alt={title}/>
-            <span 
-                className={styles.tooltip}
+        <Tooltip title={titolo} placement="top" arrow>
+            <motion.div
+                className={styles.project}
+                layout
             >
-                { title.toUpperCase() }
-            </span>
-        </motion.div>
+                <Link href={`progetti/${_id}?o=${order}`}>
+                    <a>
+                        <img src={`${API_BASE}/${thumbUrl.replace(/\\/gm, '/')}`} alt={`preview ${titolo}`}/>
+                    </a>
+                </Link>
+            </motion.div>
+        </Tooltip>
     );
 }
 

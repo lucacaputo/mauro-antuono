@@ -41,7 +41,6 @@ a {
   overflow: hidden;
 }
 #mainContainer {
-  position: relative;
   margin: auto;
   max-width: 1920px;
   z-index: 1;

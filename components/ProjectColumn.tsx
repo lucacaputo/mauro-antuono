@@ -7,10 +7,11 @@ import { motion, Variants } from "framer-motion";
 
 type ColumnProps = {
     title: string,
-    projects: ProjectType[] 
+    projects: ProjectType[],
+    order: number,
 }
 
-const ProjectColumn: React.FC<ColumnProps> = ({ title, projects }) => {
+const ProjectColumn: React.FC<ColumnProps> = ({ title, projects, order }) => {
 
     const [parent, setParent] = useState<Element | null>(null);
     useEffect(() => {
@@ -49,7 +50,7 @@ const ProjectColumn: React.FC<ColumnProps> = ({ title, projects }) => {
         >
             {
                 projects.map((el, i) => (
-                    <Project project={el} key={`prj-${title}-${i}`} />
+                    <Project order={order} project={el} key={`prj-${title}-${i}`} />
                 ))
             }
             <div className={styles.title}>

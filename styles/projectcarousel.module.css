@@ -1,0 +1,12 @@
+.slide {
+    height: 50vh;
+    position: relative;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.controls {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+}

@@ -42,7 +42,7 @@ const Interessi: NextPage = () => {
                 <title>Mario Longobardi | Interessi</title>
             </Head>
             <p dangerouslySetInnerHTML={{
-                __html: `${content}`
+                __html: content
             }} />
         </motion.div>,
         parent

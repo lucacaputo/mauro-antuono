@@ -1,9 +1,9 @@
 import "../styles/globals.css";
 import { AppProps } from "next/app";
-import { AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import Navbar from '../components/Navbar';
 import { useRef } from 'react';
-import { clamp } from "../helpers";
+import { clamp, useAuth } from "../helpers";
 import SideNav from "../components/SideNav";
 import InfoContainer from '../components/InfoContainer';
 import ScrollArrow from '../components/ScrollArrow';
@@ -16,6 +16,8 @@ import { useEffect, useState } from 'react';
 import Head from "next/head";
 import * as ga from '../lib/ga'
 import "../styles/adminStyle.css";
+import MobNavbar from "../components/mobile/Navbar/Navbar";
+import ClientAppContext from "../context/ClientAppContext";
 
 type Direction = "up" | "down";
 
@@ -42,7 +44,7 @@ const getNextRoute = (route: string, direction: Direction) => {
 		if (route === "/") return "/esperienze";
 		else return "/progetti";
 	} else {
-		if (route === "/progetti") return "/esperienze";
+		if (/\/progetti/gm.test(route)) return "/esperienze";
 		else return "/";
 	}
 }
@@ -56,19 +58,21 @@ const App: React.FC<AppProps> = ({ Component, pageProps, router }) => {
 
 	const onWheel = (e: React.WheelEvent) => {
 		clearTimeout(throttle);
-		const { deltaY } = e;
-		const direction: Direction = deltaY < 0 ? "up" : "down";
-		scrollRef.current.pixels = clamp(scrollRef.current.pixels + deltaY, NavigateThreshold, 0);
-		throttle = setTimeout(() => {
-			if (scrollRef.current.pixels === NavigateThreshold || scrollRef.current.pixels === 0) {
-				const nextRoute = getNextRoute(router.route, direction);
-				if (router.route !== nextRoute) {
-					scrollRef.current.page = nextRoute;
-					scrollRef.current.pixels = direction === "up" ? NavigateThreshold : 0;
-					router.push(scrollRef.current.page);
+		if (!/\/progetti\/.*/.test(router.route)) {
+			const { deltaY } = e;
+			const direction: Direction = deltaY < 0 ? "up" : "down";
+			scrollRef.current.pixels = clamp(scrollRef.current.pixels + deltaY, NavigateThreshold, 0);
+			throttle = setTimeout(() => {
+				if (scrollRef.current.pixels === NavigateThreshold || scrollRef.current.pixels === 0) {
+					const nextRoute = getNextRoute(router.route, direction);
+					if (router.route !== nextRoute) {
+						scrollRef.current.page = nextRoute;
+						scrollRef.current.pixels = direction === "up" ? NavigateThreshold : 0;
+						router.push(scrollRef.current.page);
+					}
 				}
-			}
-		}, 200);
+			}, 200);
+		}
 	}
 	const [loaded, setLoaded] = useState(false);
 	const [NavigateThreshold, setNavigateThreshold] = useState(200);
@@ -89,31 +93,49 @@ const App: React.FC<AppProps> = ({ Component, pageProps, router }) => {
 		if (router.route === '/progetti') return { clampTo: window.innerWidth, clampFrom: (window.innerWidth / 3) * 2, };
 		return { clampTo: (window.innerWidth / 3) * 2, clampFrom: window.innerWidth / 3, };
 	}
+	const loginData = useAuth();
+	if (!loginData.loading) {
+		if (router.route.indexOf('login') < 0) {
+			if (router.route.indexOf('admin') >= 0 && loginData.error !== undefined) {
+				router.push("/admin/login");
+				return null;
+			}
+		}
+	}
 	return !/\/admin/gm.test(router.route) ? (
-		<div 
-			className="app"
-			onWheel={onWheel}
-		>
-			<ScrollBar {...getClamp()} />
-			<Navbar isOnTop={router.route !== "/"} linksVisible={router.route === "/progetti"} />
-			<div id="mainContainer">
-				<AnimatePresence exitBeforeEnter>
-					<Component {...pageProps} key={router.route} />
+		<ClientAppContext>
+			<div 
+				className="app"
+				onWheel={onWheel}
+			>
+				<ScrollBar {...getClamp()} />
+				<Navbar isOnTop={router.route !== "/"} linksVisible={/\/progetti/gm.test(router.route)} />
+				<MobNavbar />
+				<div id="mainContainer">
+					<AnimatePresence exitBeforeEnter>
+						<Component {...pageProps} key={router.route} />
+					</AnimatePresence>
+					<SideNav isVisible={router.route !== "/"} />
+					<InfoContainer isVisible={router.route !== "/"} />
+				</div>
+				<AnimatePresence>
+					{
+						router.route !== "/progetti" &&
+						<ScrollArrow onClick={() => {
+							scrollRef.current.pixels = 0;
+							scrollRef.current.page = getNextRoute(router.route, "down");
+							router.push(scrollRef.current.page);
+						}} />
+					}
 				</AnimatePresence>
-				<SideNav isVisible={router.route !== "/"} />
-				<InfoContainer isVisible={router.route !== "/"} />
+				<AnimatePresence exitBeforeEnter>
+					{
+						router.query.id !== undefined &&
+						<motion.div exit={{ opacity: 0, transition: { when: 'afterChildren', delay: .3 } }} id="projectIdContainer" />
+					}
+				</AnimatePresence>
 			</div>
-			<AnimatePresence>
-				{
-					router.route !== "/progetti" &&
-					<ScrollArrow onClick={() => {
-						scrollRef.current.pixels = 0;
-						scrollRef.current.page = getNextRoute(router.route, "down");
-						router.push(scrollRef.current.page);
-					}} />
-				}
-			</AnimatePresence>
-		</div>
+		</ClientAppContext>
 	) : (
 		<SWRConfig
                 value={{
