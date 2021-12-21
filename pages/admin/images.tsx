@@ -2,9 +2,6 @@ import FilePicker from "../../components/admin/FilePicker";
 import FileChooser, { BaseFile } from "../../components/admin/FileChooser";
 import { NextPage } from 'next';
 import { API_BASE } from '../../helpers/index';
-<<<<<<< HEAD
-import FileChooser from "../../components/admin/FileChooser";
-=======
 import useSWR from 'swr';
 import {ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
@@ -17,7 +14,6 @@ type ImagesResponse = {
         __v: number,
     } & BaseFile>
 };
->>>>>>> develop
 
 const Images: NextPage = () => {
     const upload = async (files: File[]) => {
@@ -80,9 +76,6 @@ const Images: NextPage = () => {
     if (error) toast(error);
     return (
         <>
-<<<<<<< HEAD
-            <FileChooser selectedAction={f => null} staticFetchPath='/projects/images' />
-=======
             <ToastContainer
                 position="bottom-center"
                 autoClose={3000}
@@ -94,7 +87,6 @@ const Images: NextPage = () => {
                 draggable
                 pauseOnHover
             />
->>>>>>> develop
             <div className="container mainContainer" style={{ perspective: 200 }}>
                 <FilePicker 
                     onUpload={upload} 
