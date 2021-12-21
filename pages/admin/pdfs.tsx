@@ -4,7 +4,6 @@ import FilePicker from "../../components/admin/FilePicker";
 import { API_BASE } from '../../helpers/index';
 import useSWR from 'swr';
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
-import FileChooser from "../../components/admin/FileChooser";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.min.css';
 
