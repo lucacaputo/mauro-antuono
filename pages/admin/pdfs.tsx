@@ -95,7 +95,6 @@ const Pdfs: NextPage = () => {
     const loading = (!data && !error) || isValidating;
     return (
         <>
-            <FileChooser selectedAction={s => null} staticFetchPath="/projects/pdfs" />
             <div className="container mainContainer" style={{ perspective: 200 }}>
                 <FilePicker 
                     onUpload={upload} 
