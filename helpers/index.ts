@@ -1,4 +1,4 @@
-export const API_BASE = "http://localhost:8080";
+export const API_BASE = "https://api.mariolongobardi.it";
 import useSWR from 'swr';
 import { EditProjectFormState } from '../components/admin/ProjectCard';
 
