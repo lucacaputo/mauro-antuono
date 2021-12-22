@@ -23,7 +23,7 @@ const Project: React.FC<ProjectProps> = ({ project, order }) => {
                     </a>
                 </Link>
             </div>
-        {/* </Tooltip> */}
+        // </Tooltip>
     );
 }
 
