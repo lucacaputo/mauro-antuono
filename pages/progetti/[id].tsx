@@ -184,7 +184,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
         props: {
             project: data.project
         },
-        revalidate: 60 * 60 * 24,
+        revalidate: 10,
     }
 }
 
