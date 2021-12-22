@@ -131,7 +131,7 @@ const App: React.FC<AppProps> = ({ Component, pageProps, router }) => {
 				<AnimatePresence exitBeforeEnter>
 					{
 						router.query.id !== undefined &&
-						<motion.div exit={{ opacity: 0, transition: { when: 'afterChildren', delay: .3 } }} key={router.asPath} id="projectIdContainer" />
+						<motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0, transition: { when: 'afterChildren', delay: .3 } }} key={router.asPath} id="projectIdContainer" />
 					}
 				</AnimatePresence>
 			</div>
