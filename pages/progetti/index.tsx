@@ -99,7 +99,7 @@ const Progetti: NextPage<{ projects: Project[], ok: boolean }> = ({ projects, ok
                 <title>Mario Longobardi | Progetti</title>
             </Head>
             <ProjectLinks links={sideLinks} currentOrdering={order} />
-            <AnimatePresence>
+            <AnimatePresence exitBeforeEnter>
             {
                 router.route === "/progetti" && !mobile &&
                 renderObject().map((p, i) => (

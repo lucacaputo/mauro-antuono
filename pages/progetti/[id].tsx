@@ -156,7 +156,7 @@ const Progetto: NextPage<ProjectProps> = ({ project }) => {
                                             initial={{ x: '-50%', scale: 1 }}
                                             whileHover={{ scale: 1.1 }}
                                         >
-                                                Vedi
+                                            Vedi
                                         </motion.a>
                                     </div>
                                 ))
