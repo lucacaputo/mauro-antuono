@@ -42,7 +42,7 @@ const ProjectColumn: React.FC<ColumnProps> = ({ title, projects, order }) => {
     
     return parent !== null ? createPortal(
         <motion.div 
-            className={styles.col}
+            className="col"
             variants={colVar}
             initial="initial"
             animate="animate"
