@@ -1,6 +1,6 @@
 .project {
-    width: 65px;
-    height: 65px;
+    width: 65px !important;
+    height: 65px !important;
     margin-right: 10px;
     position: relative;
     cursor: pointer;
