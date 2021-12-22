@@ -30,6 +30,13 @@ const ProjectColumn: React.FC<ColumnProps> = ({ title, projects, order }) => {
                 when: "beforeChildren"
             }
         },
+        exit: {
+            y: 25,
+            opacity: 0,
+            transition: {
+                when: 'afterChildren'
+            }
+        }
     }
     
     return parent !== null ? createPortal(
@@ -38,7 +45,7 @@ const ProjectColumn: React.FC<ColumnProps> = ({ title, projects, order }) => {
             variants={colVar}
             initial="initial"
             animate="animate"
-            exit={{ opacity: 0, transition: { when: 'afterChildren' } }}
+            exit="exit"
             layout
         >
             {
