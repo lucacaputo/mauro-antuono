@@ -41,7 +41,7 @@ const ProjectLinks: React.FC<ProjectLinkProps> = ({ links, currentOrdering }) =>
             initial="initial"
             animate="loaded"
             exit="exit"
-            className={styles.projectLinks}
+            className="projectLinks"
         >
             {
                 links.map(link => (
