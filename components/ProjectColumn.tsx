@@ -38,6 +38,7 @@ const ProjectColumn: React.FC<ColumnProps> = ({ title, projects, order }) => {
             variants={colVar}
             initial="initial"
             animate="animate"
+            exit={{ opacity: 0, transition: { when: 'afterChildren' } }}
             layout
         >
             {
