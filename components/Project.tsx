@@ -17,7 +17,6 @@ const Project: React.FC<ProjectProps> = ({ project, order }) => {
         <Tooltip title={titolo} placement="top" arrow>
             <motion.div
                 className={styles.project}
-                layout
             >
                 <Link href={`progetti/${_id}?o=${order}`}>
                     <a>
