@@ -32,6 +32,7 @@ const ProjectColumn: React.FC<ColumnProps> = ({ title, projects, order }) => {
         },
         exit: {
             y: 25,
+            scale: 1,
             opacity: 0,
             transition: {
                 when: 'afterChildren'
