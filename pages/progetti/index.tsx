@@ -130,8 +130,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
         props: {
             projects: data.projects,
             ok: data.ok,
-        },
-        revalidate: 60 * 60 * 24,
+        }
     }
 }
 
