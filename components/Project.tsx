@@ -15,7 +15,7 @@ const Project: React.FC<ProjectProps> = ({ project, order }) => {
     const thumbUrl = project.img_details.find(d => d._id === thumbnail).url || null;
     return (
         <Tooltip title={titolo} placement="top" arrow>
-            <motion.div
+            <div
                 className={styles.project}
             >
                 <Link href={`progetti/${_id}?o=${order}`}>
@@ -23,7 +23,7 @@ const Project: React.FC<ProjectProps> = ({ project, order }) => {
                         <img src={`${API_BASE}/${thumbUrl.replace(/\\/gm, '/')}`} alt={`preview ${titolo}`}/>
                     </a>
                 </Link>
-            </motion.div>
+            </div>
         </Tooltip>
     );
 }
