@@ -1,5 +1,5 @@
 import { motion, Variants } from "framer-motion";
-import { GetStaticPaths, GetStaticProps, NextPage } from "next";
+import { GetServerSideProps, NextPage } from "next";
 import { createPortal } from "react-dom";
 import React, { useState, useEffect } from "react";
 import styles from "../../styles/progettosingolo.module.css";
@@ -177,22 +177,13 @@ const Progetto: NextPage<ProjectProps> = ({ project }) => {
         : null;
 }
 
-export const getStaticProps: GetStaticProps = async ({ params }) => {
+export const getServerSideProps: GetServerSideProps = async ({ params }) => {
     const { id } = params;
     const data = await fetch(`${API_BASE}/projects/${id}`).then(r => r.json());
     return {
         props: {
             project: data.project
-        },
-        revalidate: 10,
-    }
-}
-
-export const getStaticPaths: GetStaticPaths = async () => {
-    const ids = await fetch(`${API_BASE}/projects/projects`).then(r => r.json());
-    return {
-        paths: ids.projects.map(i => ({ params: { id: i._id } })),
-        fallback: false,
+        }
     }
 }
 
