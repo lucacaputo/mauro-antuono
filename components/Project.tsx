@@ -13,7 +13,7 @@ const Project: React.FC<ProjectProps> = ({ project, order }) => {
     const { titolo, thumbnail, _id } = project;
     const thumbUrl = project.img_details.find(d => d._id === thumbnail).url || null;
     return (
-        <Tooltip title={titolo} placement="top" arrow>
+        // <Tooltip title={titolo} placement="top" arrow>
             <div
                 className={styles.project}
             >
@@ -23,7 +23,7 @@ const Project: React.FC<ProjectProps> = ({ project, order }) => {
                     </a>
                 </Link>
             </div>
-        </Tooltip>
+        {/* </Tooltip> */}
     );
 }
 
