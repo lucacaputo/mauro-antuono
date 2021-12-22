@@ -32,7 +32,7 @@ const Progetti: NextPage<{ projects: Project[], ok: boolean }> = ({ projects, ok
             setOrder(parseInt(router.query.o as string));
         }
     }, [router.query]);
-    const { data, isValidating, error } = useSWR<{ ok: boolean, projects: Project[] }, any>(`${API_BASE}/projects/projects`);
+    const { data, isValidating, error } = useSWR<{ ok: boolean, projects: Project[] }, any>(`${API_BASE}/projects/projects`, { revalidateOnFocus: false });
     const loading = (!data && !error) || isValidating;
     const sortedProjects: ProjectWithYear[] = mobile
         ? data.projects.map(p => ({ ...p, year: new Date(p.data).getFullYear().toString() }))
