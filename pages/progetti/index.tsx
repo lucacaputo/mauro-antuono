@@ -122,6 +122,7 @@ const Progetti: NextPage<{ projects: Project[], ok: boolean }> = ({ projects, ok
 }
 
 export const getServerSideProps: GetServerSideProps = async () => {
+    console.log('getServerSideProps function called');
     const data = await fetch(`${API_BASE}/projects/projects`)
         .then(r => r.json())
         .catch(err => console.log(err));
