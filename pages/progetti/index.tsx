@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import { GetStaticProps, NextPage } from "next"
+import { NextPage, GetServerSideProps } from "next"
 import styles from "../../styles/progetti.module.css";
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
@@ -121,7 +121,7 @@ const Progetti: NextPage<{ projects: Project[], ok: boolean }> = ({ projects, ok
     );
 }
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getServerSideProps: GetServerSideProps = async () => {
     const data = await fetch(`${API_BASE}/projects/projects`)
         .then(r => r.json())
         .catch(err => console.log(err));
